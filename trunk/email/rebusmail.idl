@@ -1,0 +1,54 @@
+// rebusmail.idl : IDL source for rebusmail.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (rebusmail.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(DEAB418B-D6F6-42AC-932A-CACCE2D8BD57),
+		dual,
+		helpstring("IEMailer Interface"),
+		pointer_default(unique)
+	]
+	interface IEMailer : IDispatch
+	{
+		[id(1), helpstring("method SetFrom")] HRESULT SetFrom([in] BSTR szFromAddress);
+		[id(2), helpstring("method SetTo")] HRESULT SetTo([in] BSTR szToAddress);
+		[id(3), helpstring("method SetSubject")] HRESULT SetSubject([in] BSTR szSubject);
+		[id(4), helpstring("method SetBody")] HRESULT SetBody([in] BSTR szBody);
+		[id(5), helpstring("method Send")] HRESULT Send();
+	};
+
+[
+	uuid(DAF18973-6717-472F-9EE8-F28EC8405C8E),
+	version(1.0),
+	helpstring("rebusmail 1.0 Type Library")
+]
+library REBUSMAILLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(16C89A51-2F64-4A5F-947D-09F98A3C2D3C),
+		helpstring("_IEMailerEvents Interface")
+	]
+	dispinterface _IEMailerEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(FF7E5E3F-3047-4FCC-BF4E-D90E9E4FDA07),
+		helpstring("EMailer Class")
+	]
+	coclass EMailer
+	{
+		[default] interface IEMailer;
+		[default, source] dispinterface _IEMailerEvents;
+	};
+};

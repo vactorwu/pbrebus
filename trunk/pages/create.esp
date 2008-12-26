@@ -1,0 +1,55 @@
+<script language="JScript">
+	function codename_changed() {
+		path = document.getElementById("path");
+		codename = document.getElementById("codename");
+		parts = path.value.split("\\");
+		parts[parts.length - 1] = codename.value;
+		path.value = parts.join("\\");
+	}
+</script>
+<form action="create" method="post">
+<table width=80%% class=tbl cellpadding=4>
+	<esp:default>
+	<tr>
+		<td width=100 class=parmname>Code name:</td>
+		<td>
+			<input id=codename name="codename" onkeyup="codename_changed()" value=""> 
+		</td>
+	</tr>
+	<tr>
+		<td class=parmname>Path:</td>
+		<td>
+			<input id=path name="path" value="{path}">
+		</td>
+	</tr>
+	<tr>
+		<td class=parmname>Product name:</td>
+		<td>
+			<input name="product" value="">
+		</td>
+	</tr>
+	<tr>
+		<td class=parmname>Description:</td>
+		<td>
+			<input name="description" value="">
+		</td>
+	</tr>
+	</esp:default>
+	<tr>
+		<td class=parmname>Template:</td>
+		<td>
+			<select name="template">
+				<esp:templates>
+					<option value="{template}">{template}</option>
+				</esp:templates>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input class=button type="submit" value="Create">
+		</td>
+	</tr>
+</table>
+</form>

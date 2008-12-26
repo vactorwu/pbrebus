@@ -1,0 +1,59 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS SourceCodeControl"
+   progid="REBUS.SourceCodeControl"
+   version="1"
+   classid="{662C9985-66CE-40d8-9FB6-70F451EA6173}"
+   remotable="true" />
+
+<object progid="REBUS.SCC" id="scc_obj" events="true"/>
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <property name="scc"/>
+   <method name="run" internalName="run"/>
+</public>  
+
+<script language="JScript">
+
+	<![CDATA[  
+
+		function getParmsDef()
+		{
+			// get installed SCC products
+			vendor_list = scc_obj.getVendors();
+			vendor_arr = vendor_list.split(";");
+			vendors = "";
+
+			for(i = 0; i < vendor_arr.length; i++) {
+				if(i > 0) vendors += ";";
+				vendors += vendor_arr[i] + ":" + vendor_arr[i];
+			}
+
+			return '<parms><Vendor>'+ vendors +'</Vendor>' +
+				'<UserName>system</UserName>' +
+				'<UserPassword></UserPassword>'+
+				'</parms>';
+		}
+
+		function run()
+		{
+			project.logger.write("> connect to: " + parms.get("Vendor"));
+			project.logger.write("> user name: " + parms.get("UserName"));
+
+			// connect to the source code control system
+			scc_obj.connect( parms.get("Vendor"), parms.get("UserName"), parms.get("UserPassword") );
+
+			// export scc
+			scc = scc_obj;
+
+			project.logger.write("> connected");
+		}
+		
+	]]>
+
+</script>
+</component>

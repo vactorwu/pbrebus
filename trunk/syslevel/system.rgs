@@ -1,0 +1,26 @@
+HKCR
+{
+	Syslevel.system.1 = s 'system Class'
+	{
+		CLSID = s '{E1AB17F5-2C65-4EAD-887B-B801B93857DB}'
+	}
+	Syslevel.system = s 'system Class'
+	{
+		CLSID = s '{E1AB17F5-2C65-4EAD-887B-B801B93857DB}'
+		CurVer = s 'Syslevel.system.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {E1AB17F5-2C65-4EAD-887B-B801B93857DB} = s 'system Class'
+		{
+			ProgID = s 'Syslevel.system.1'
+			VersionIndependentProgID = s 'Syslevel.system'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{DAB0F5D9-EC34-4440-91E0-B5A71C9B4A09}'
+		}
+	}
+}

@@ -1,0 +1,112 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8447.0 (2614a71e).
+//
+// rebus.tlh
+//
+// C++ source equivalent of Win32 type library ../core/rebus.tlb
+// compiler-generated file created 11/21/05 at 21:14:20 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace RebusTypeLib {
+
+//
+// Forward references and typedefs
+//
+
+struct /* coclass */ ScriptletCoClass;
+struct __declspec(uuid("2ad2fb1d-0f3f-4959-9664-b9aa792cf2ad"))
+/* dispinterface */ Automation;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(Automation, __uuidof(IDispatch));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("66d1d00e-992b-460e-acf8-e50a68c30157"))
+ScriptletCoClass;
+    // [ default ] dispinterface Automation
+
+struct __declspec(uuid("2ad2fb1d-0f3f-4959-9664-b9aa792cf2ad"))
+Automation : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=GetdefaultProjectPath))
+    _variant_t defaultProjectPath;
+    __declspec(property(get=Getprojects))
+    _variant_t projects;
+    __declspec(property(get=Getconfig))
+    _variant_t config;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    // Methods:
+    _variant_t getProjectCount (
+        const _variant_t & OptionalArgs );
+    _variant_t getProject (
+        const _variant_t & OptionalArgs );
+    _variant_t getTemplateCount (
+        const _variant_t & OptionalArgs );
+    _variant_t getTemplate (
+        const _variant_t & OptionalArgs );
+    _variant_t getTemplates (
+        const _variant_t & OptionalArgs );
+    _variant_t getPluginCount (
+        const _variant_t & OptionalArgs );
+    _variant_t getPlugin (
+        const _variant_t & OptionalArgs );
+    _variant_t getPlugins (
+        const _variant_t & OptionalArgs );
+    _variant_t removeProject (
+        const _variant_t & OptionalArgs );
+    _variant_t createProject (
+        const _variant_t & codename,
+        const _variant_t & path,
+        const _variant_t & productname,
+        const _variant_t & description,
+        const _variant_t & stemplate,
+        const _variant_t & OptionalArgs );
+    _variant_t saveConfig (
+        const _variant_t & OptionalArgs );
+    _variant_t init (
+        const _variant_t & OptionalArgs );
+    _variant_t Getconfig ( );
+    // Method 'Putconfig' not emitted because of invalid return type: 
+    _variant_t Getprojects ( );
+    // Method 'Putprojects' not emitted because of invalid return type: 
+    _variant_t GetdefaultProjectPath ( );
+    // Method 'PutdefaultProjectPath' not emitted because of invalid return type: 
+};
+
+//
+// Named GUID constants initializations
+//
+
+extern "C" const GUID __declspec(selectany) LIBID_RebusTypeLib =
+    {0x8b6ae591,0x6448,0x4410,{0xbf,0x15,0x0d,0x3c,0x3d,0x99,0xcd,0x17}};
+extern "C" const GUID __declspec(selectany) CLSID_ScriptletCoClass =
+    {0x66d1d00e,0x992b,0x460e,{0xac,0xf8,0xe5,0x0a,0x68,0xc3,0x01,0x57}};
+extern "C" const GUID __declspec(selectany) DIID_Automation =
+    {0x2ad2fb1d,0x0f3f,0x4959,{0x96,0x64,0xb9,0xaa,0x79,0x2c,0xf2,0xad}};
+
+//
+// Wrapper method implementations
+//
+
+#include "rebus.tli"
+
+} // namespace RebusTypeLib
+
+#pragma pack(pop)

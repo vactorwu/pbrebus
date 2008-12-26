@@ -1,0 +1,86 @@
+<table width=80%%>
+	<tr>
+		<td>
+			<table width=100%% class=tbl cellpadding=0 cellspacing=0>
+				<tr>
+					<td class=hdr>Product Name</td>
+					<td class=hdr>Schedule</td>
+					<td class=hdr>Actions</td>
+				</tr>
+				<esp:task>
+				<tr>
+					<td class=col>{product}</td> 
+					<td class=col>
+						Min: {min} &nbsp;&nbsp;
+						Hour: {hour} &nbsp;&nbsp;
+						Day: {day} &nbsp;&nbsp;
+						DayOfWeek: {wday} &nbsp;&nbsp;
+						Month: {month}
+					</td>
+					<td class=col>
+						<a href="task?action=delete&task_id={task_id}">Remove</a>
+					</td>
+				</tr>
+				</esp:task>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top:30pt;padding-bottom:5pt;">New scheduled task:</td>
+	</tr>
+	<tr>
+		<td>
+			<form action="task" method="post" class=frm1>
+			<input type="hidden" name="action" value="create">
+			<table width=60%% cellpadding=3>
+				<tr>
+					<td class=parmname width=100>Project:</td>
+					<td>
+						<select name="id">
+							<esp:project>
+								<option value="{project_id}">{product}</option>
+							</esp:project>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class=parmname>Minute:</td>
+					<td>
+						<input name="Minute" value="*">
+					</td>
+				</tr>
+				<tr>
+					<td class=parmname>Hour:</td>
+					<td>
+						<input name="Hour" value="*">
+					</td>
+				</tr>
+				<tr>
+					<td class=parmname>Day:</td>
+					<td>
+						<input name="Day" value="*">
+					</td>
+				</tr>
+				<tr>
+					<td class=parmname>Day of week:</td>
+					<td>
+						<input name="Wday" value="*">
+					</td>
+				</tr>
+				<tr>
+					<td class=parmname>Month:</td>
+					<td>
+						<input name="Month" value="*">
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align=left>
+						<input class=button type="submit" value="Create">
+					</td>
+				</tr>
+			</table>
+			</form>		
+		</td>
+	</tr>
+</table>

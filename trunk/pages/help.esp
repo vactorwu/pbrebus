@@ -1,0 +1,18 @@
+<table width=70%% cellpadding=0>
+	<tr>
+		<td>
+			<table cellpadding=3>
+				<tr><td><a href="docs/REBUS.UsersGuide.html" target="_blank"><b>User's Guide</b></a></td></tr>
+				<tr><td>This document is intended for REBUS users. It covers the REBUS architecture, describes its main components and user interface. The document also describes REBUS standard plug-ins, its purpose and its parameters definition.</td></tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top:15pt;">
+			<table cellpadding=3>
+				<tr><td><a href="docs/REBUS.DevelopersGuide.html" target="_blank"><b>Developer's Guide</b></a></td></tr>
+				<tr><td>This document is intended for developers of REBUS plug-ins. It describes the physical REBUS architecture and provides exhaustive information on how to program REBUS plug-ins.</td></tr>
+			</table>
+		</td>
+	</tr>
+</table>

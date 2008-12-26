@@ -1,0 +1,26 @@
+HKCR
+{
+	REBUS.SCC.1 = s 'REBUS SCC Class'
+	{
+		CLSID = s '{EAFDAA93-9A65-4267-B8FE-C31A061B3CCB}'
+	}
+	REBUS.SCC = s 'REBUS SCC Class'
+	{
+		CLSID = s '{EAFDAA93-9A65-4267-B8FE-C31A061B3CCB}'
+		CurVer = s 'REBUS.SCC.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EAFDAA93-9A65-4267-B8FE-C31A061B3CCB} = s 'REBUS SCC Class'
+		{
+			ProgID = s 'REBUS.SCC.1'
+			VersionIndependentProgID = s 'REBUS.SCC'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{A12BE2EB-7530-40D3-B137-9990D3184900}'
+		}
+	}
+}

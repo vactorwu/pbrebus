@@ -1,0 +1,66 @@
+// pbcompiler.idl : IDL source for pbcompiler.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (pbcompiler.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+//import "dispex.idl";
+	[
+		object,
+		uuid(63DD36AF-75F1-49DE-8277-3617C42CD26A),
+		dual,
+		helpstring("IPBCompiler Interface"),
+		pointer_default(unique)
+	]
+	interface IPBCompiler : IDispatch
+	{
+		[id(1), helpstring("method Init")] HRESULT Init([in] BSTR szPbVersion, [in] BSTR szBinPath);
+		[id(2), helpstring("method RegenerateLibrary")] HRESULT RegenerateLibrary(BSTR libname);
+		[id(3), helpstring("method Regenerate")] HRESULT Regenerate();
+		[id(4), helpstring("method BuildLibrary")] HRESULT BuildLibrary([in] BSTR name);
+		[id(5), helpstring("method Build")] HRESULT Build();
+		[id(6), helpstring("method SetLibraryList")] HRESULT SetLibraryList([in] BSTR szXMLLibList);
+		[id(7), helpstring("method Migrate")] HRESULT Migrate();
+		[id(8), helpstring("method FullRebuild")] HRESULT FullRebuild();
+		[id(9), helpstring("method SetLinkedLibrary")] HRESULT SetLinkedLibrary([in] BSTR szLibList);
+		[id(10), helpstring("method SetApplicationLibrary")] HRESULT SetApplicationLibrary([in] BSTR szAppLibrary);
+		[id(11), helpstring("method SetExeName")] HRESULT SetExeName([in] BSTR szExeName);
+		[id(12), helpstring("method SetIconFile")] HRESULT SetIconFile([in] BSTR szIconFile);
+		[id(13), helpstring("method SetApplicationObject")] HRESULT SetApplicationObject([in] BSTR szApplicationObject);
+		[id(14), helpstring("method SetApplicationResourceFile")] HRESULT SetApplicationResourceFile([in] BSTR szApplicationResourceFile);
+	};
+
+[
+	uuid(B39E12B5-DEB4-43a4-AF5B-1ED2537EE682),
+	version(1.0),
+	helpstring("pbcompiler 1.0 Type Library")
+]
+library PBCOMPILERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(CF0E19AB-F60D-43E0-BF60-2D484DE34201),
+		helpstring("_IcompilerEvents Interface")
+	]
+	dispinterface _IcompilerEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method log")] HRESULT log([in] BSTR what);
+		[id(2), helpstring("method fatalError")] HRESULT fatalError([in] BSTR what);
+	};
+
+	[
+		uuid(77765AE8-6757-4ad0-8741-FCC99DE0E0A4),
+		helpstring("compiler Class")
+	]
+	coclass compiler
+	{
+		[default] interface IPBCompiler;
+		[default, source] dispinterface _IcompilerEvents;
+	};
+};

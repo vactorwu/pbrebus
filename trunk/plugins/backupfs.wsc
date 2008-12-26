@@ -1,0 +1,62 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Backup on FileServer"
+   progid="REBUS.BackupFileServer"
+   version="1"
+   classid="{C29B1F7F-E6E8-4836-914E-727350964C08}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[ 
+
+		function getParmsDef()
+		{
+			return '<parms><BackupFolder></BackupFolder></parms>';
+		}
+
+		function run()
+		{
+			// get source project path
+			var sourcepath = project.path;
+
+//while(true) {}
+
+			// get project version
+			var version = project.config.selectSingleNode("/project/version").text;
+
+			// get destination path
+			var destpath = parms.get("BackupFolder") + "\\" + version;
+
+			// backup project
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+
+			try {			
+				if(!fso.FolderExists(parms.get("BackupFolder"))) {
+					fso.CreateFolder(parms.get("BackupFolder"));
+				}
+
+				if(!fso.FolderExists(destpath)) {
+					fso.CreateFolder(destpath);
+				}
+			
+				fso.CopyFolder( sourcepath, destpath, true );
+
+				project.logger.write("> project backup is executed to the folder: "+ destpath);
+			}
+			catch(e) {	
+				throw new Error(1, "backup to the folder '"+ destpath +"' has failed: "+ e.description);
+			}
+		}
+		
+	]]>
+
+</script>
+</component>

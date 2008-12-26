@@ -1,0 +1,92 @@
+<html>
+<esp:title>
+<head>
+<title>{title}</title>
+<style type="text/css">
+
+	body {margin:0pt;font-family:ms sans serif;}
+	table {;}
+	td {font-size:10pt;}
+	input {border:.5pt solid #C6C5D9;width:100%%;background:#FEF6EC;}
+	select {width:100%%;background:#FEF6EC;}
+
+	a {color:#3B429D;text-decoration:underline;}
+	a:hover {color:#8080ff;text-decoration:underline;}
+
+	.back {background:#C6C5D9;}
+	.fore {background:white;border:.5pt solid #B3ADAD;}
+	.menu {background:#3B429D;height:30pt;}
+	.menutext {color:white;text-decoration:none;}
+	.menutext:hover {color:silver;}
+	.menutd {height:12pt;text-align:center;background:#4B52AD;border-right:.5pt solid #3B429D;padding-left:15pt;padding-right:15pt;}
+	.foot {height:20pt;text-align:center;color:gray;font-family:small;font-size:7pt;} 
+	.footlink {color:#3B429D;}
+	.pagename {color:gray;font-weight:bold;height:20pt;padding:8pt;font-family:arial;font-size:14pt;border-bottom:.5pt solid #e6e5f9;}
+	
+	.parmname {text-align:right;padding-right:4pt;}
+	.button {border-style:groove; border:.5pt solid silver;background:#4D57BB;margin-top:2pt;width:50pt;color:white;}
+	
+	.tbl {border-collapse:collapse;}
+	.hdr {border:.5pt solid #9e9e9e;background:silver;font-weight:bold;padding:3pt;color:white;font-family:arial}
+	.col {border:.5pt solid #aeaeae;padding:3pt;}
+	
+	.frm1 {border:.5pt solid #e6e5f9;padding:10pt;}
+	
+	.eval {height:15pt;background:#FAA49E;border:.5pt solid #F07E70;border-left:none;border-right:none;color:#C33215;text-align:center}
+	.evallnk {color:#C33215;}
+	.evallnk:hover {color:#C33215;}
+	
+	.direction {text-decoration:none;font-size:8pt;font-weight:bold;} 
+	.direction:hover {text-decoration:none;}
+</style>
+</head>
+<body>
+<table cellpadding=0 cellspacing=0 width=100%% height=100%%>
+	<tr>
+		<td height="30" class=back width="10%%"></td>
+		<td class=back></td>
+		<td class=back width=10%%></td>
+	</tr>
+	<tr>
+		<td class=back></td>
+		<td class=fore>
+			<table cellpadding=0 cellspacing=0 width=100%% height=100%%>
+				<tr>	
+					<td class=menu>
+						<table cellpadding=0 cellspacing=0 width=100%% height=100%%>
+							<tr>
+								<td align=left width=30>
+								</td>
+								<td>
+									<table cellpadding=2 cellspacing=0 height=100%%>
+										<tr>
+											<td width=25></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>	
+											<td></td>
+											<td class=menutd><a class=menutext href="/">main</a></td>
+											<td class=menutd><a class=menutext href="/task">scheduled tasks</a></td>
+											<td class=menutd><a class=menutext href="/settings">settings</a></td>
+											<td class=menutd><a class=menutext href="/help">help</a></td>
+										</tr>
+									</table>
+								</td>
+								<td align=right style="padding-right:15pt;">
+									<img style="margin-bottom:-5pt;" src="_img/rt.bmp">
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class=pagename>
+						{title}
+					</td>
+				</tr>
+				<tr>	
+					<td valign=top style="padding:20pt;">
+</esp:title>

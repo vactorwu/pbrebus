@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rebus>
+	<settings>
+		<path>c:\save\rebus\projects\</path>
+		<port>9000</port>
+		<copyright>Copyright (c) 2005 MyCompany Software</copyright>
+		<company>MyCompany Software</company>
+		<email>REBUS &lt;rebus@trinity&gt;</email>
+	</settings>
+	<taskinfo><month>4</month><task><id>1</id><name>OpenSource Aura</name><min>30</min><hour>*</hour><day>*</day><month>*</month><wday>*</wday><last>11.11 14:30</last></task><task><id>0</id><name>Super ERP System</name><min>0</min><hour>*</hour><day>*</day><month>*</month><wday>*</wday><last>11.11 21:0</last></task><task><id>3</id><name>HR Management System</name><min>0</min><hour>*</hour><day>*</day><month>*</month><wday>*</wday><last>11.11 21:0</last></task></taskinfo>
+	<project>
+		<codename>test</codename>
+		<path>c:\temp\rebus\test</path>
+		<plugin>
+			<class>REBUS.Compiler</class>
+			<parms>
+				<ExeName></ExeName>
+				<BinSubFolder>bin</BinSubFolder>
+				<RegenerationMode>4</RegenerationMode>
+			</parms>
+		</plugin>
+	</project>
+	<project><codename>aura</codename><path>c:\save\rebus\aura</path></project>
+	<project><codename>EMStaff</codename><path>C:\save\rebus\projects\emstaff</path></project><project><codename>hrms</codename><path>C:\save\rebus\projects\hrms</path></project></rebus>

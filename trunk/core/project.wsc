@@ -1,0 +1,261 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Project"
+   progid="REBUS.Project"
+   version="1"
+   classid="{1BA6E0EA-8DDF-4168-9FFF-930E7AF730A7}"
+   remotable="true" />
+
+<public> 
+   <property name="path"/>
+   <property name="corepath"/>
+   <property name="codename"/>
+   <property name="product" get="get_Product"/>
+   <property name="description" get="get_Description"/>
+   <property name="process_id"/>
+   <property name="config"/>
+
+   <method name="appendPlugin" internalName="appendPlugin"/>
+   <method name="removePlugin" internalName="removePlugin"/>
+   <method name="enablePlugin" internalName="enablePlugin">
+		<parameter name="position"/>
+		<parameter name="state"/>
+   </method>
+   <method name="moveUpPlugin" internalName="moveUpPlugin"/>
+   <method name="moveDownPlugin" internalName="moveDownPlugin"/>
+   <method name="setPluginParm" internalName="setPluginParm">
+		<parameter name="position"/>
+		<parameter name="parm"/>
+		<parameter name="value"/>
+   </method>   
+   <method name="getPluginParm" internalName="getPluginParm">
+		<parameter name="position"/>
+		<parameter name="parm"/>
+   </method>
+   <method name="getPluginClass" internalName="getPluginClass"/>
+    
+   <method name="init" internalName="init"/>
+   <method name="build" internalName="build"/>
+   <method name="stop" internalName="stop"/>
+   <method name="output" internalName="output"/>
+   <method name="isalive" internalName="isalive"/>
+   <method name="errorText" internalName="errorText"/>
+   <method name="save" internalName="save"/>
+   <method name="getLastBuildDate" internalName="getLastBuildDate"/>
+</public>
+<script language="JScript">
+
+	<![CDATA[
+
+		// state variables
+		var shell = null;
+
+		// initialize the object
+		function init( a_codename, a_path )
+		{
+			// setup project credentials
+			this.codename = a_codename;
+			this.path = a_path;
+
+			// create the logger object
+			this.logger = new ActiveXObject("REBUS.Logger");
+			this.logger.path = path;
+
+			// open configuration file
+			this.config = new ActiveXObject("Microsoft.XMLDOM");
+			this.config.async = false;
+			this.config.load(a_path + '\\config.xml');
+			
+			this.product = this.config.selectSingleNode("/project/productname").text;
+			this.description = this.config.selectSingleNode("/project/description").text;
+			
+			this.exec = null;
+			this.last_error = "";
+		}
+		
+		function get_Product()
+		{
+			return this.config.selectSingleNode("/project/productname").text;
+		}
+
+		function get_Description()
+		{
+			return this.config.selectSingleNode("/project/description").text;
+		}
+		
+		// build the project
+		function build()
+		{
+			if(isalive()) return;
+			
+			if(shell == null) {
+				shell = new ActiveXObject("WScript.Shell");
+			} 
+			
+			// clear the last error text
+			this.last_error = "";
+			
+			// run the project instance
+			this.exec = shell.Exec("cscript.exe \""+ corepath +"\"/job.wsf /path:\""+ this.path +"\"" );
+			process_id = this.exec.ProcessID;
+		}
+		
+		// report on error during job running
+		function errorText()
+		{
+			if(exec == null) return "";
+
+			if(!this.exec.StdErr.AtEndOfStream) 
+			{
+				this.last_error = "ERROR: " + this.exec.StdErr.ReadAll();
+
+				this.logger.append(">");
+				this.logger.append(this.last_error);
+
+				return this.last_error;
+			}
+			else 
+				return this.last_error;
+		}
+		
+		// check if the instance is alive
+		function isalive()
+		{
+			return (this.exec != null && this.exec.Status == 0);
+		}
+		
+		// stop the project building
+		function stop()
+		{
+			if(this.exec == null) throw new Error("Can't stop the process because it was not started");
+			if(process_id == "") throw new Error("Can't stop the process because it's id is undefined");
+			
+			// kill the process
+			var process = new ActiveXObject("Syslevel.Process");
+			l_result = process.kill( new Number(process_id) );
+			
+			while(this.exec.Status == 0) {}
+			this.logger.append("> STOP: release building is stopped by the user.");
+		}
+
+		// output the log file of the project
+		function output()
+		{
+			return logger.read();
+		}
+
+		// save the project configuration file
+		function save()
+		{
+			this.config.save(this.path + "\\config.xml");
+		}
+
+		// append plugin to the project configuration file
+		function appendPlugin( classname )
+		{
+			x_cls = this.config.createElement("class");
+			x_cls.text = classname;
+			x_parms = this.config.createElement("parms");
+			x_plugin = this.config.createElement("plugin");
+			x_plugin.setAttribute("active", "yes");
+			x_plugin.appendChild( x_cls );
+			x_plugin.appendChild( x_parms );
+
+			this.config.documentElement.appendChild(x_plugin);
+			save();
+		}
+
+		// remove plugin from the project configuration file
+		function removePlugin( position )
+		{
+			x_plugin = this.config.selectSingleNode("/project/plugin["+ position +"]");
+			this.config.documentElement.removeChild(x_plugin);
+			save();
+		}
+
+		// enable or disable plugin
+		function enablePlugin( position, state )
+		{
+			x_plugin = this.config.selectSingleNode("/project/plugin["+ position +"]");
+			x_plugin.setAttribute("active", (state ? "yes" : "no"));
+		}
+
+		// move up the plugin definition in plugin list of 
+		// the project configuration file
+		function moveUpPlugin( position )
+		{
+			if( position < 1 ) return;
+
+			list = this.config.selectNodes("/project/plugin");
+			this.config.documentElement.insertBefore(list.item( position ), list.item( new Number(position) - 1));
+
+			save();
+		}
+
+		// move down the plugin definition in plugin list of 
+		// the project configuration file
+		function moveDownPlugin( position )
+		{
+			list = this.config.selectNodes("/project/plugin");
+			if( position >= list.length - 1 ) return;
+
+			this.config.documentElement.insertBefore(list.item(new Number(position) + 1), list.item( position ));
+
+			save();
+		}
+
+		function getPluginClass( position )
+		{
+			return this.config.selectSingleNode("/project/plugin["+ position +"]/class").text;
+		}
+		
+		// setup plugin parameter
+		function setPluginParm( position, parm, value )
+		{
+			var plugin = null;
+
+			try {
+				plugin = config.selectSingleNode("/project/plugin["+ position +"]");
+			}
+			catch(e) {
+				throw new Error(1, "The plugin with classname '"+ classname +"' has not been installed.");
+			}
+
+			try {
+				param = plugin.selectSingleNode("parms/" + parm);
+				param.text = value;
+			}
+			catch(e) {
+				x_parm = config.createElement(parm);
+				x_parm.text = value;
+				
+				plugin.selectSingleNode("parms").appendChild(x_parm);
+			}
+		}
+		
+		// return plugin parameter
+		function getPluginParm( position, parm )
+		{
+			try {
+				return config.selectSingleNode("/project/plugin["+ position +"]/parms/"+ parm).text;
+			}
+			catch(e) {
+				return "";
+			}
+		}
+		
+		// returns date of a last project build
+		function getLastBuildDate()
+		{
+			try {
+				return this.logger.getFileDate();
+			}
+			catch( e ) {
+				return '';
+			}
+		}
+	]]>
+
+</script>
+</component>

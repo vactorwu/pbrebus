@@ -1,0 +1,64 @@
+// syslevel.idl : IDL source for syslevel.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (syslevel.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(E0306EDB-A7FE-4D73-BE55-982D1015EF1F),
+		dual,
+		helpstring("Iprocess Interface"),
+		pointer_default(unique)
+	]
+	interface Iprocess : IDispatch
+	{
+		[id(1), helpstring("method get")] HRESULT get([in] BSTR name, [out, retval] LONG *dwProcessId);
+		[id(2), helpstring("method kill")] HRESULT kill([in] LONG dwProcessId, [out, retval] LONG *result);
+		[id(3), helpstring("method getCurrentProcessId")] HRESULT getCurrentProcessId([out, retval] LONG *pPID);
+		[id(4), helpstring("method loadUserProfile")] HRESULT loadUserProfile();
+		[id(5), helpstring("method unloadUserProfile")] HRESULT unloadUserProfile();
+		[id(6), helpstring("method isProcessAlive")] HRESULT isProcessAlive([in] LONG dwProcessId, [out, retval] BOOL *bResult);
+		[id(7), helpstring("method setProcessPriority")] HRESULT setProcessPriority([in] LONG lPriority);
+	};
+	[
+		object,
+		uuid(97BB2E94-AF08-4AF9-8364-647DEF7297A2),
+		dual,
+		helpstring("Isystem Interface"),
+		pointer_default(unique)
+	]
+	interface Isystem : IDispatch
+	{
+		[id(1), helpstring("method getComputerName")] HRESULT getComputerName([out, retval] BSTR *pName);
+	};
+
+[
+	uuid(DAB0F5D9-EC34-4440-91E0-B5A71C9B4A09),
+	version(1.0),
+	helpstring("syslevel 1.0 Type Library")
+]
+library SYSLEVELLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(5849BFBD-2B01-4CD0-AE0E-598881B9D592),
+		helpstring("process Class")
+	]
+	coclass process
+	{
+		[default] interface Iprocess;
+	};
+	[
+		uuid(E1AB17F5-2C65-4EAD-887B-B801B93857DB),
+		helpstring("system Class")
+	]
+	coclass system
+	{
+		[default] interface Isystem;
+	};
+};

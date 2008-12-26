@@ -1,0 +1,26 @@
+HKCR
+{
+	IPM.VersionInfo.1 = s 'VersionInfo Class'
+	{
+		CLSID = s '{327DEAC6-34E3-41E6-8986-BFE882C8AEDB}'
+	}
+	IPM.VersionInfo = s 'VersionInfo Class'
+	{
+		CLSID = s '{327DEAC6-34E3-41E6-8986-BFE882C8AEDB}'
+		CurVer = s 'IPM.VersionInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {327DEAC6-34E3-41E6-8986-BFE882C8AEDB} = s 'VersionInfo Class'
+		{
+			ProgID = s 'IPM.VersionInfo.1'
+			VersionIndependentProgID = s 'IPM.VersionInfo'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{D4C9703F-8881-47C0-A10D-3507A4EDC941}'
+		}
+	}
+}

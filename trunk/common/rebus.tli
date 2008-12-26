@@ -1,0 +1,114 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8447.0 (2614a71e).
+//
+// rebus.tli
+//
+// Wrapper implementations for Win32 type library ../core/rebus.tlb
+// compiler-generated file created 11/22/05 at 09:22:56 - DO NOT EDIT!
+
+#pragma once
+
+//
+// dispinterface Automation wrapper method implementations
+//
+
+inline _variant_t Automation::getProjectCount ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0xf, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getProject ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0xe, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getTemplateCount ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0xd, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getTemplate ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0xc, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getTemplates ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0xb, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getPluginCount ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0xa, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getPlugin ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x9, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::getPlugins ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x8, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::removeProject ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x7, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::createProject ( const _variant_t & codename, const _variant_t & path, const _variant_t & productname, const _variant_t & description, const _variant_t & stemplate, const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x6, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c\x000c\x000c\x000c\x000c\x000c", &codename, &path, &productname, &description, &stemplate, &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::saveConfig ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x5, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::init ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x4, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::Getconfig ( ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x3, DISPATCH_PROPERTYGET, VT_VARIANT, (void*)&_result, NULL);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::Getprojects ( ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x2, DISPATCH_PROPERTYGET, VT_VARIANT, (void*)&_result, NULL);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Automation::GetdefaultProjectPath ( ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x1, DISPATCH_PROPERTYGET, VT_VARIANT, (void*)&_result, NULL);
+    return _variant_t(_result, false);
+}

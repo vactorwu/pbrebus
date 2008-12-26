@@ -1,0 +1,117 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8447.0 (27f1b912).
+//
+// pbproject.tlh
+//
+// C++ source equivalent of Win32 type library ..\pbproject\debug\pbproject.dll
+// compiler-generated file created 05/17/02 at 20:39:41 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+//
+// Forward references and typedefs
+//
+
+struct /* coclass */ pbproject;
+struct __declspec(uuid("c00b4bc7-445a-4c7f-a21b-571efa5ec1c9"))
+/* dual interface */ Ipbproject;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(Ipbproject, __uuidof(Ipbproject));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("85f8d17e-4c3a-4471-9e5c-3e871780e99a"))
+pbproject;
+    // [ default ] interface Ipbproject
+
+struct __declspec(uuid("c00b4bc7-445a-4c7f-a21b-571efa5ec1c9"))
+Ipbproject : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=Getlibraries))
+    _bstr_t libraries;
+    __declspec(property(get=Getcontent))
+    _bstr_t content;
+    __declspec(property(get=Getpbversion))
+    _bstr_t pbversion;
+    __declspec(property(get=Getsession))
+    long session;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    HRESULT load (
+        _bstr_t path );
+    _bstr_t Getlibraries ( );
+    _bstr_t Getcontent ( );
+    HRESULT open (
+        _bstr_t sid );
+    IDispatchPtr libraryNode ( );
+    _bstr_t Getpbversion ( );
+    long Getsession ( );
+    IDispatchPtr childNode (
+        _bstr_t libname,
+        long bRefresh );
+    _bstr_t libraryPath (
+        _bstr_t name );
+    IDispatchPtr propertiesNode ( );
+
+    //
+    // Raw methods provided by interface
+    //
+
+    virtual HRESULT __stdcall raw_load (
+        BSTR path ) = 0;
+    virtual HRESULT __stdcall get_libraries (
+        BSTR * pVal ) = 0;
+    virtual HRESULT __stdcall get_content (
+        BSTR * pVal ) = 0;
+    virtual HRESULT __stdcall raw_open (
+        BSTR sid ) = 0;
+    virtual HRESULT __stdcall raw_libraryNode (
+        IDispatch * * xmlNode ) = 0;
+    virtual HRESULT __stdcall get_pbversion (
+        BSTR * pVal ) = 0;
+    virtual HRESULT __stdcall get_session (
+        long * pVal ) = 0;
+    virtual HRESULT __stdcall raw_childNode (
+        BSTR libname,
+        long bRefresh,
+        IDispatch * * xmlChildNode ) = 0;
+    virtual HRESULT __stdcall raw_libraryPath (
+        BSTR name,
+        BSTR * pVal ) = 0;
+    virtual HRESULT __stdcall raw_propertiesNode (
+        IDispatch * * xmlNode ) = 0;
+};
+
+//
+// Named GUID constants initializations
+//
+
+extern "C" const GUID __declspec(selectany) LIBID_PBPROJECTLib =
+    {0x3acecb35,0x258c,0x4029,{0x8e,0x61,0x41,0x4e,0x90,0x0c,0xc0,0x88}};
+extern "C" const GUID __declspec(selectany) CLSID_pbproject =
+    {0x85f8d17e,0x4c3a,0x4471,{0x9e,0x5c,0x3e,0x87,0x17,0x80,0xe9,0x9a}};
+extern "C" const GUID __declspec(selectany) IID_Ipbproject =
+    {0xc00b4bc7,0x445a,0x4c7f,{0xa2,0x1b,0x57,0x1e,0xfa,0x5e,0xc1,0xc9}};
+
+//
+// Wrapper method implementations
+//
+
+#include "pbproject.tli"
+
+#pragma pack(pop)

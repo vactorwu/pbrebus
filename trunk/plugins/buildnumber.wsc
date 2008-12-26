@@ -1,0 +1,46 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Increase Build Number"
+   progid="REBUS.IncreaseBuildNumber"
+   version="1"
+   classid="{28941471-8CDB-4084-9E0F-B519EFCCF49B}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[ 
+
+		function getParmsDef() 
+		{
+			return '';
+		}
+
+		function run()
+		{
+			// get the project version number
+			version = project.config.selectSingleNode("/project/version").text;
+			info = version.split(".");
+			
+			// increase last number in the version by one
+			if( info.length > 0 ) {
+				info[info.length - 1] = (new Number(info[info.length - 1]) + 1).toString();
+				version = info.join(".");
+				
+				project.config.selectSingleNode("/project/version").text = version;
+				project.logger.write("> increase build number: " + version);
+			} 
+			else {
+				project.logger.write("> can't find version info");
+			}
+		}
+		
+	]]>
+
+</script>
+</component>

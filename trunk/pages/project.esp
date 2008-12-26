@@ -1,0 +1,149 @@
+<esp:project>
+<form action="project" method="post" id="parms">
+<input type="hidden" name="project_id" value="{project_id}"> 
+<input type="hidden" name="action" value="setparms">
+<table width=100%% cellpadding=0 cellspacing=0 class=tbl>
+	<tr>
+		<td>
+			<table width=100%% style="table-layout:fixed;">
+				<tr><td class=parmname width=80>Product:</td>
+					<td><input name="product" value="{product}"></td>
+					<td class=parmname width=100>CodeName:</td>
+					<td width=100>{codename}<input type="hidden" name="codename" value="{codename}"></td></tr>
+			</table> 
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width=100%% style="table-layout:fixed;">
+				<tr><td class=parmname width=80 style="padding-top:2pt;">Description:</td>
+					<td style="padding-top:2pt;">
+						<input name="description" value="{description}"> 
+					</td>
+					<td class=parmname width=100>Version:</td>
+					<td width=100><input name="version" value="{version}"></td>
+				</tr>
+				<tr><td class=parmname style="padding-top:2pt;">E-mail To:</td>
+					<td style="padding-top:2pt;">
+						<input name="email" value="{email}"> 
+					</td>
+					<td style="padding-top:2pt;"></td>
+					<td style="padding-top:2pt;"></td>
+				</tr>
+				<tr><td class=parmname style="padding-top:2pt;">Path:</td>
+					<td style="padding-top:2pt;">
+						{path}
+					</td>
+					<td style="padding-top:2pt;"></td>
+					<td style="padding-top:2pt;"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top:7pt;padding-bottom:7pt;">
+			List of project's plug-ins:
+		</td>
+	</tr>
+		<esp:plugin> 
+			<tr>
+				<td valign=top class=col style="background:#F0F2F6">
+					<table width=100%% cellspacing=0>
+						<tr>
+							<td width=16>
+								<input type="checkbox" style="width:16pt;border:none;background:background:#F0F2F6;" name="enabled_{index}" {checked} title="Uncheck it to disable plug-in">
+							</td>
+							<td>{class}</td>
+							<td width=60 align=center>
+								<esp:moveup>
+									<a style="font-size:8pt;" href="project?project_id={project_id}&action=moveup&plugin={index}">Move Up</a>
+								</esp:moveup>
+							</td>
+							<esp:movedown>
+							<td width=60 align=center>
+									<a style="font-size:8pt;" href="project?project_id={project_id}&action=movedown&plugin={index}">Move Down</a>
+							</td>
+							</esp:movedown>
+							<td width=60 align=center>
+								<a style="font-size:8pt;" href="project?project_id={project_id}&action=delete&plugin={index}" onclick="if(confirm('Are you sure you want to delete plug-in configuration?') != 1) return false;">Remove</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class=col style="text-align:left;">
+					<table width=76%%>
+						<input type="hidden" name="plugin_{index}_parms" value="{parameters}">
+						<esp:parameter>
+						<tr>
+							<td width=160 class=parmname>{name}:</td>
+							<td>
+								<input type="hidden" name="plugin_{index}_parm_{parm_index}" value="{name}">
+									<esp:selector>
+										<select name="plugin_{plugin_index}_{name}">
+											<esp:option>
+												<option {selected} value="{value}">{name}</option>
+											</esp:option>
+										</select>
+									</esp:selector>
+									<esp:simple>
+										<input name="plugin_{plugin_index}_{name}" value='{value}'>
+									</esp:simple>
+							</td>
+						</tr>
+						</esp:parameter>
+					</table>
+				</td>
+			</tr>
+		</esp:plugin>
+	<input type="hidden" name="plugin_num" value="{plugin_num}">
+	
+	<tr>
+		<td align=center style="padding-top:5pt;">
+			<table width=100%%>
+				<tr>
+					<td align=left>
+						<input class=button style="width:80pt;" type="submit" value="Save & Build">
+					</td>
+					<td align=right>
+						<input class=button type="submit" value="Save" onclick="javascript: p = document.getElementById('persistent'); p.value=1; f = document.getElementById('parms'); f.submit();">&nbsp;
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<input type="hidden" id="persistent" name="persistent" value="0">
+</form>
+
+<table width=100%%>
+	<tr>
+		<td>
+			Append new plug-in into the project configuration:
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form action="project" method="post">
+				<input type="hidden" name="action" value="newplugin">
+				<input type="hidden" name="project_id" value="{project_id}">
+				<table width=100%%>
+					<tr>
+						<td style="padding-top:3pt;">
+							<select name="PluginClass">
+								<esp:allplugins>
+									<option value="{plugin}">{plugin}</option>
+								</esp:allplugins>
+							</select>
+						</td>
+						<td width=80 align=right>
+							<input class=button type="submit" value="Append">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</td>
+	</tr>
+</table>
+</esp:project>

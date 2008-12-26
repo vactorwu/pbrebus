@@ -1,0 +1,80 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: pbcompiler - Win32 Release MinSize--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x419 /fo"ReleaseMinSize/pbcompiler.res" /d "NDEBUG" "C:\save\rebus\src\pbcompiler\pbcompiler.rc"" 
+Creating temporary file "C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP23.tmp" with contents
+[
+/nologo /MT /W3 /GX /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "_ATL_DLL" /Fp"ReleaseMinSize/pbcompiler.pch" /Yu"stdafx.h" /Fo"ReleaseMinSize/" /Fd"ReleaseMinSize/" /FD /c 
+"C:\save\rebus\src\pbcompiler\compiler.cpp"
+"C:\save\rebus\src\pbcompiler\dynamemlist.cpp"
+"C:\save\rebus\src\pbcompiler\errortext.cpp"
+"C:\save\rebus\src\common\LogFile.cpp"
+"C:\save\rebus\src\common\md5.cpp"
+"C:\save\rebus\src\orca\ORCASession.cpp"
+"C:\save\rebus\src\pbcompiler\pbcompiler.cpp"
+"C:\save\rebus\src\common\Pbl2XML.cpp"
+"C:\save\rebus\src\common\REGISTRY.CPP"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP23.tmp" 
+Creating temporary file "C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP24.tmp" with contents
+[
+/nologo /MT /W3 /GX /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "_ATL_DLL" /Fp"ReleaseMinSize/pbcompiler.pch" /Yc"stdafx.h" /Fo"ReleaseMinSize/" /Fd"ReleaseMinSize/" /FD /c 
+"C:\save\rebus\src\pbcompiler\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP24.tmp" 
+Creating temporary file "C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP25.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib imagehlp.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"ReleaseMinSize/pbcompiler.pdb" /machine:I386 /def:".\pbcompiler.def" /out:"ReleaseMinSize/pbcompiler.dll" /implib:"ReleaseMinSize/pbcompiler.lib" 
+.\ReleaseMinSize\compiler.obj
+.\ReleaseMinSize\dynamemlist.obj
+.\ReleaseMinSize\errortext.obj
+.\ReleaseMinSize\LogFile.obj
+.\ReleaseMinSize\md5.obj
+.\ReleaseMinSize\ORCASession.obj
+.\ReleaseMinSize\pbcompiler.obj
+.\ReleaseMinSize\Pbl2XML.obj
+.\ReleaseMinSize\REGISTRY.OBJ
+.\ReleaseMinSize\StdAfx.obj
+.\ReleaseMinSize\pbcompiler.res
+]
+Creating command line "link.exe @C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP25.tmp"
+Creating temporary file "C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP26.bat" with contents
+[
+@echo off
+regsvr32 /s /c ".\ReleaseMinSize\pbcompiler.dll"
+echo regsvr32 exec. time > ".\ReleaseMinSize\regsvr32.trg"
+]
+Creating command line "C:\DOCUME~1\Dos\LOCALS~1\Temp\RSP26.bat"
+Compiling resources...
+Compiling...
+StdAfx.cpp
+C:\save\rebus\src\pbcompiler\..\common\cstring.h(20) : warning C4005: 'INT_MAX' : macro redefinition
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\limits.h(45) : see previous definition of 'INT_MAX'
+Compiling...
+compiler.cpp
+dynamemlist.cpp
+errortext.cpp
+LogFile.cpp
+md5.cpp
+ORCASession.cpp
+pbcompiler.cpp
+Pbl2XML.cpp
+REGISTRY.CPP
+Generating Code...
+Linking...
+   Creating library ReleaseMinSize/pbcompiler.lib and object ReleaseMinSize/pbcompiler.exp
+<h3>Output Window</h3>
+Performing registration
+
+
+
+<h3>Results</h3>
+pbcompiler.dll - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<table width=70%% cellpadding=0 cellspacing=0>
+	<esp:alive>
+	<tr>
+		<td style="padding-bottom:20pt;">
+			<table width=100%% class=tbl style="border:.5pt solid #FCBF97;">
+				<tr>
+					<td style="background-image:url(_img/prj.bmp);padding:4pt;padding-left:7pt;">
+						Compiled Now
+					</td>
+				</tr>
+				<esp:aliveproject>
+					<tr>
+						<td>
+							<table width=100%%>
+								<tr>
+									<td>
+										<table width=100%% cellpadding=4>
+											<td>{product}</td>
+											<td width=100> 
+												Priority: {priority} &nbsp; 
+											</td>
+											<td width=60> 
+												<a class=direction title="Increase priority" href="priority?project_id={project_id}&dir=plus">(+)</a> &nbsp; <a class=direction title="Decrease priority" href="priority?project_id={project_id}&dir=minus">(-)</a>
+											</td>
+											<td width=80 align=right><a href="build?project_id={project_id}">Build State</a></td>
+											<td width=40 align=right style="padding-right:4pt;"><a href="stop?project_id={project_id}">Stop</a></td>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</esp:aliveproject>
+			</table>
+		</td>
+	</tr>
+	</esp:alive>
+	
+	<tr>
+		<td>
+			<table class=tbl width=100%%>
+				<tr>
+					<td style="padding-bottom:10pt;"><a href="create">Create the new project...</a></td>
+				</tr>
+				<esp:project>
+				<tr>
+					<td style="padding-bottom:15pt;"> 
+						<table width=100%% style="border:.5pt solid #FCBF97;" cellpadding=0 cellspacing=0>
+							<tr>
+								<td style="background-image:url(_img/prj.bmp)">
+									<table width=100%% cellpadding=0 cellspacing=0>
+										<tr>
+											<td style="padding-left:5pt;">{product}</td>
+											<td width=200>
+												<table cellpadding=4>
+													<tr>
+														<td><a href="prepeare?project_id={project_id}">Build</a></td>
+														<td></td>
+														<td><a href="project?project_id={project_id}">Configure...</a></td>
+														<td></td>
+														<td></td>
+														<td><a href="?codename={codename}&action=delete" onclick="if(confirm('Are you sure you want to delete a project?') != 1) return false;">Remove</a></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td> 
+							</tr>
+							<tr>
+								<td style="padding:5pt;">{description}</td> 
+							</tr>
+
+							<esp:lastbuild>
+							<tr>
+								<td style="padding:5pt;">Last Build: &nbsp; {date} &nbsp;&nbsp; <a href="build?project_id={project_id}">View Log</a></td> 
+							</tr>
+							</esp:lastbuild>
+
+						</table>			
+					</td>
+				</tr>
+				</esp:project>
+			</table>
+		</td>
+	</tr>
+</table>
+
