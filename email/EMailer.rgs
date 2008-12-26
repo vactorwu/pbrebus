@@ -1,0 +1,26 @@
+HKCR
+{
+	REBUS.EMailer.1 = s 'EMailer Class'
+	{
+		CLSID = s '{FF7E5E3F-3047-4FCC-BF4E-D90E9E4FDA07}'
+	}
+	REBUS.EMailer = s 'EMailer Class'
+	{
+		CLSID = s '{FF7E5E3F-3047-4FCC-BF4E-D90E9E4FDA07}'
+		CurVer = s 'REBUS.EMailer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FF7E5E3F-3047-4FCC-BF4E-D90E9E4FDA07} = s 'EMailer Class'
+		{
+			ProgID = s 'REBUS.EMailer.1'
+			VersionIndependentProgID = s 'REBUS.EMailer'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{DAF18973-6717-472F-9EE8-F28EC8405C8E}'
+		}
+	}
+}

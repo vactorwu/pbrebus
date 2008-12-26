@@ -1,0 +1,32 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8447.0 (49564068).
+//
+// plugin.tli
+//
+// Wrapper implementations for Win32 type library ../core/plugin.tlb
+// compiler-generated file created 12/03/05 at 12:59:56 - DO NOT EDIT!
+
+#pragma once
+
+//
+// dispinterface Plugin wrapper method implementations
+//
+
+inline _variant_t Plugin::run ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x3, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Plugin::Getproject ( ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x2, DISPATCH_PROPERTYGET, VT_VARIANT, (void*)&_result, NULL);
+    return _variant_t(_result, false);
+}
+
+inline _variant_t Plugin::getParmsDef ( const _variant_t & OptionalArgs ) {
+    VARIANT _result;
+    _com_dispatch_method(this, 0x1, DISPATCH_METHOD, VT_VARIANT, (void*)&_result, 
+        L"\x000c", &OptionalArgs);
+    return _variant_t(_result, false);
+}

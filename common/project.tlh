@@ -1,0 +1,136 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8447.0 (04873188).
+//
+// project.tlh
+//
+// C++ source equivalent of Win32 type library ../core/project.tlb
+// compiler-generated file created 11/22/05 at 09:22:56 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace ProjectTypeLib {
+
+//
+// Forward references and typedefs
+//
+
+struct /* coclass */ ScriptletCoClass2;
+struct __declspec(uuid("71e6d7e5-64c7-403b-95bb-7fc23a4687e4"))
+/* dispinterface */ Automation2;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(Automation2, __uuidof(IDispatch));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("1ba6e0ea-8ddf-4168-9fff-930e7af730a7"))
+ScriptletCoClass2;
+    // [ default ] dispinterface Automation2
+
+struct __declspec(uuid("71e6d7e5-64c7-403b-95bb-7fc23a4687e4"))
+Automation2 : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=Getpath))
+    _variant_t path;
+    __declspec(property(get=Getcorepath))
+    _variant_t corepath;
+    __declspec(property(get=Getcodename))
+    _variant_t codename;
+    __declspec(property(get=Getproduct))
+    _variant_t product;
+    __declspec(property(get=Getdescription))
+    _variant_t description;
+    __declspec(property(get=Getprocess_id))
+    _variant_t process_id;
+    __declspec(property(get=Getconfig))
+    _variant_t config;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    // Methods:
+    _variant_t save (
+        const _variant_t & OptionalArgs );
+    _variant_t errorText (
+        const _variant_t & OptionalArgs );
+    _variant_t isalive (
+        const _variant_t & OptionalArgs );
+    _variant_t output (
+        const _variant_t & OptionalArgs );
+    _variant_t stop (
+        const _variant_t & OptionalArgs );
+    _variant_t build (
+        const _variant_t & OptionalArgs );
+    _variant_t init (
+        const _variant_t & OptionalArgs );
+    _variant_t getPluginClass (
+        const _variant_t & OptionalArgs );
+    _variant_t getPluginParm (
+        const _variant_t & position,
+        const _variant_t & parm,
+        const _variant_t & OptionalArgs );
+    _variant_t setPluginParm (
+        const _variant_t & position,
+        const _variant_t & parm,
+        const _variant_t & value,
+        const _variant_t & OptionalArgs );
+    _variant_t moveDownPlugin (
+        const _variant_t & OptionalArgs );
+    _variant_t moveUpPlugin (
+        const _variant_t & OptionalArgs );
+    _variant_t enablePlugin (
+        const _variant_t & position,
+        const _variant_t & state,
+        const _variant_t & OptionalArgs );
+    _variant_t removePlugin (
+        const _variant_t & OptionalArgs );
+    _variant_t appendPlugin (
+        const _variant_t & OptionalArgs );
+    _variant_t Getconfig ( );
+    // Method 'Putconfig' not emitted because of invalid return type: 
+    _variant_t Getprocess_id ( );
+    // Method 'Putprocess_id' not emitted because of invalid return type: 
+    _variant_t Getdescription ( );
+    // Method 'Putdescription' not emitted because of invalid return type: 
+    _variant_t Getproduct ( );
+    // Method 'Putproduct' not emitted because of invalid return type: 
+    _variant_t Getcodename ( );
+    // Method 'Putcodename' not emitted because of invalid return type: 
+    _variant_t Getcorepath ( );
+    // Method 'Putcorepath' not emitted because of invalid return type: 
+    _variant_t Getpath ( );
+    // Method 'Putpath' not emitted because of invalid return type: 
+};
+
+//
+// Named GUID constants initializations
+//
+
+extern "C" const GUID __declspec(selectany) LIBID_ProjectTypeLib =
+    {0x41021c5b,0xd226,0x48d2,{0x96,0xc7,0x32,0xb9,0xec,0xce,0xc2,0x4c}};
+extern "C" const GUID __declspec(selectany) CLSID_ScriptletCoClass2 =
+    {0x1ba6e0ea,0x8ddf,0x4168,{0x9f,0xff,0x93,0x0e,0x7a,0xf7,0x30,0xa7}};
+extern "C" const GUID __declspec(selectany) DIID_Automation2 =
+    {0x71e6d7e5,0x64c7,0x403b,{0x95,0xbb,0x7f,0xc2,0x3a,0x46,0x87,0xe4}};
+
+//
+// Wrapper method implementations
+//
+
+#include "project.tli"
+
+} // namespace ProjectTypeLib
+
+#pragma pack(pop)

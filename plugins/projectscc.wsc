@@ -1,0 +1,99 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Project based on SCC repository"
+   progid="REBUS.ProjectSCC"
+   version="1"
+   classid="{046F0EF6-895D-4300-AEB4-A1E526B6C273}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <property name="libraries"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[ 
+
+		function getParmsDef()
+		{
+			return '<parms><SCCFolder></SCCFolder>'+
+				'<SourceSubFolder>sources</SourceSubFolder>'+
+				'<SCCResourceFolder></SCCResourceFolder>'+
+				'<ResourceSubFolder>sources</ResourceSubFolder>'+
+				'</parms>';
+		}
+
+		function run() 
+		{
+			// get the scc object
+			scc = project.plugin("REBUS.SourceCodeControl").scc;
+			if(scc == null) throw new Error(1, "Can't get SCC object from REBUS.SourceCodeControl");
+		
+			// source files path
+			source_path = project.path + '\\' + parms.get("SourceSubFolder");
+			// resource files path
+			res_path = project.path + "\\" + parms.get("ResourceSubFolder");
+
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+
+			if(!fso.FolderExists(source_path)) fso.CreateFolder(source_path);
+			if(!fso.FolderExists(res_path)) fso.CreateFolder(res_path);
+
+			project.logger.write("> delete old files..."); 
+
+			// delete old files
+			try {
+				fso.DeleteFile(source_path + "\\*.*");
+				if(parms.get("ResourceSubFolder") != '')
+					fso.DeleteFile(res_path + "\\*.*");
+			}
+			catch(e) {
+			}
+
+			project.logger.write("> get files from SCC repository..."); 
+
+			// get files from scc
+			scc.getFiles( parms.get("SCCFolder"), source_path, "*.pb?" );
+			if(parms.get("ResourceSubFolder") != '')
+				scc.getFiles( parms.get("SCCResourceFolder"), res_path, "*.*" );
+			
+			project.logger.write("> form libraries list..."); 
+			
+			// scan the directory
+			folder = fso.GetFolder(source_path);
+			files = new Enumerator(folder.Files);
+
+			// form library list
+			x_lib = '<libraries>'; 
+			for(; !files.atEnd(); files.moveNext()) 
+			{
+				if(files.item().Name.match(/\.pb[ld]/gi) != null) 
+				{
+					// find out the resource file
+					resource_path = ""
+					if(parms.get("ResourceSubFolder") != '') {
+						pbr = /pbl/gi;
+						resource_path = res_path + "\\" + files.item().Name.replace(pbr, "pbr");
+						if(!fso.FileExists(resource_path)) resource_path = "";
+					}
+
+					x_lib += '<library>' +
+						'<name>'+ files.item().Name+'</name>' +
+						'<path>'+ files.item().Path+'</path>' +
+						'<resource>'+ resource_path +'</resource>' +
+						'</library>';
+				}
+			}
+			x_lib += '</libraries>';
+
+			libraries = x_lib;
+		}
+		
+	]]>
+
+</script>
+</component>

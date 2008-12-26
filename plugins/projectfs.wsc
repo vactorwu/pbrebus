@@ -1,0 +1,72 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Project based on file system"
+   progid="REBUS.ProjectFileSystem"
+   version="1"
+   classid="{28F51C8D-5B6D-4f04-A164-1A4F11250B5E}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <property name="libraries"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[ 
+
+		function getParmsDef()
+		{
+			return '<parms><SourceSubFolder>sources</SourceSubFolder>'+
+				'<ResourceSubFolder>sources</ResourceSubFolder>'+
+				'</parms>';
+		}
+
+		function run()
+		{
+			project.logger.write("> form the library list...");
+
+			// source files path
+			source_path = project.path + '\\' + parms.get("SourceSubFolder");
+
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+			if(!fso.FolderExists(source_path)) throw new Error(1, "The directory doesn't exist: "+ source_path);
+
+			// scan the directory
+			folder = fso.GetFolder(source_path);
+			files = new Enumerator(folder.Files);
+
+			// form library list
+			x_lib = '<libraries>'; 
+			for(; !files.atEnd(); files.moveNext()) 
+			{
+				if(files.item().Name.match(/\.pb[ld]/gi) != null) 
+				{
+					// find out the resource file
+					res_path = "";
+					if(parms.get("ResourceSubFolder") != '') {
+						pbr = /pbl/gi;
+						res_path = project.path + "\\" + parms.get("ResourceSubFolder") + "\\" +
+							files.item().Name.replace(pbr, "pbr");
+						if(!fso.FileExists(res_path)) res_path = "";
+					}
+				
+					x_lib += '<library>' +
+						'<name>'+ files.item().Name+'</name>' +
+						'<path>'+ files.item().Path+'</path>' +
+						'<resource>'+ res_path +'</resource>' +
+						'</library>';
+				}
+			}
+			x_lib += '</libraries>';
+
+			libraries = x_lib;
+		}
+		
+	]]>
+
+</script>
+</component>

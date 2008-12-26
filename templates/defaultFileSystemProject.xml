@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<description></description>
+	<productname></productname>
+	<version>1.0.0</version>
+	<email></email>
+	<plugin active="yes">
+		<class>REBUS.ProjectFileSystem</class>
+		<parms>
+			<SourceSubFolder>sources</SourceSubFolder>
+			<ResourceSubFolder>sources\res</ResourceSubFolder>
+		</parms>
+	</plugin>
+	<plugin active="yes">
+		<class>REBUS.Compiler</class>
+		<parms>
+			<RegenerationMode>4</RegenerationMode>
+			<BinSubFolder>bin</BinSubFolder>
+			<LinkedLibraries></LinkedLibraries>
+			<ExeName></ExeName>
+			<IconFileName></IconFileName>
+			<AppLibrary></AppLibrary>
+			<AppObject></AppObject>
+			<PowerBuilder></PowerBuilder>
+		</parms>
+	</plugin>
+	<plugin active="yes">
+		<class>REBUS.IncreaseBuildNumber</class>
+		<parms/>
+	</plugin>
+	<plugin active="yes">
+		<class>REBUS.Version</class>
+		<parms/>
+	</plugin>
+	<plugin active="yes">
+		<class>REBUS.BackupFileServer</class>
+		<parms>
+			<BackupFolder></BackupFolder>
+		</parms>
+	</plugin>
+</project>

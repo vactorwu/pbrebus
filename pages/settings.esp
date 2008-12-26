@@ -1,0 +1,26 @@
+<esp:settings>
+<form action="settings" method="post">
+<input type="hidden" name="action" value="save">
+<table width=80%% cellpadding=4>
+	<tr>
+		<td width=150 class=parmname>Web Server Port:</td><td><input name="port" value="{port}"></td>
+	</tr>
+	<tr>
+		<td class=parmname>Projects Default Path:</td><td><input name="path" value="{path}"></td>
+	</tr>
+	<tr>
+		<td class=parmname>REBUS E-mail Address:</td><td><input name="email" value="{email}"></td>
+	</tr>
+	<tr>
+		<td class=parmname>Company Name:</td><td><input name="company" value="{company}"></td>
+	</tr>
+	<tr>
+		<td class=parmname>Copyright:</td><td><input name="copyright" value="{copyright}"></td>
+	</tr>
+ 
+	<tr>
+		<td></td><td align=left><input class=button type="submit" value="Save"></td>
+	</tr>
+</table>
+</form>
+</esp:settings>

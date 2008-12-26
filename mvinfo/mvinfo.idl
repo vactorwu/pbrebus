@@ -1,0 +1,65 @@
+// mvinfo.idl : IDL source for mvinfo.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (mvinfo.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(6869846A-588B-40BB-97CB-0048DB57BED7),
+		dual,
+		helpstring("IVersionInfo Interface"),
+		pointer_default(unique)
+	]
+	interface IVersionInfo : IDispatch
+	{
+		[id(1), helpstring("method load")] HRESULT load(BSTR lpszFileName);
+		[propget, id(2), helpstring("property FileVersion")] HRESULT FileVersion([out, retval] BSTR *pVal);
+		[propput, id(2), helpstring("property FileVersion")] HRESULT FileVersion([in] BSTR newVal);
+		[propget, id(3), helpstring("property ProductVersion")] HRESULT ProductVersion([out, retval] BSTR *pVal);
+		[propput, id(3), helpstring("property ProductVersion")] HRESULT ProductVersion([in] BSTR newVal);
+		[propget, id(4), helpstring("property Mode")] HRESULT Mode([out, retval] short *pVal);
+		[propput, id(4), helpstring("property Mode")] HRESULT Mode([in] short newVal);
+		[propget, id(5), helpstring("property Description")] HRESULT Description([out, retval] BSTR *pVal);
+		[propput, id(5), helpstring("property Description")] HRESULT Description([in] BSTR newVal);
+		[propget, id(6), helpstring("property Copyright")] HRESULT Copyright([out, retval] BSTR *pVal);
+		[propput, id(6), helpstring("property Copyright")] HRESULT Copyright([in] BSTR newVal);
+		[propget, id(7), helpstring("property CompanyName")] HRESULT CompanyName([out, retval] BSTR *pVal);
+		[propput, id(7), helpstring("property CompanyName")] HRESULT CompanyName([in] BSTR newVal);
+		[propget, id(8), helpstring("property InternalName")] HRESULT InternalName([out, retval] BSTR *pVal);
+		[propput, id(8), helpstring("property InternalName")] HRESULT InternalName([in] BSTR newVal);
+		[propget, id(9), helpstring("property ProductName")] HRESULT ProductName([out, retval] BSTR *pVal);
+		[propput, id(9), helpstring("property ProductName")] HRESULT ProductName([in] BSTR newVal);
+		[propget, id(10), helpstring("property Comments")] HRESULT Comments([out, retval] BSTR *pVal);
+		[propput, id(10), helpstring("property Comments")] HRESULT Comments([in] BSTR newVal);
+		[propget, id(11), helpstring("property LegalTrademarks")] HRESULT LegalTrademarks([out, retval] BSTR *pVal);
+		[propput, id(11), helpstring("property LegalTrademarks")] HRESULT LegalTrademarks([in] BSTR newVal);
+		[propget, id(12), helpstring("property OriginalFilename")] HRESULT OriginalFilename([out, retval] BSTR *pVal);
+		[propput, id(12), helpstring("property OriginalFilename")] HRESULT OriginalFilename([in] BSTR newVal);
+		[propget, id(13), helpstring("property SpecialBuild")] HRESULT SpecialBuild([out, retval] BSTR *pVal);
+		[propput, id(13), helpstring("property SpecialBuild")] HRESULT SpecialBuild([in] BSTR newVal);
+		[id(14), helpstring("method setProperty")] HRESULT setProperty(BSTR name, BSTR val);
+		[id(15), helpstring("method getProperty")] HRESULT getProperty(BSTR name, [out, retval] BSTR *pVal);
+	};
+
+[
+	uuid(D4C9703F-8881-47C0-A10D-3507A4EDC941),
+	version(1.0),
+	helpstring("mvinfo 1.0 Type Library")
+]
+library MVINFOLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(327DEAC6-34E3-41E6-8986-BFE882C8AEDB),
+		helpstring("VersionInfo Class")
+	]
+	coclass VersionInfo
+	{
+		[default] interface IVersionInfo;
+	};
+};

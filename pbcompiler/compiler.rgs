@@ -1,0 +1,26 @@
+HKCR
+{
+	REBUS.pbcompiler.1 = s 'REBUS pbcompiler'
+	{
+		CLSID = s '{77765AE8-6757-4ad0-8741-FCC99DE0E0A4}'
+	}
+	REBUS.pbcompiler = s 'REBUS pbcompiler'
+	{
+		CLSID = s '{77765AE8-6757-4ad0-8741-FCC99DE0E0A4}'
+		CurVer = s 'REBUS.pbcompiler.1'
+	}
+	NoRemove CLSID
+	{
+		NoRemove {77765AE8-6757-4ad0-8741-FCC99DE0E0A4} = s 'compiler Class'
+		{
+			ProgID = s 'REBUS.pbcompiler.1'
+			VersionIndependentProgID = s 'REBUS.pbcompiler'
+			ForceRemove 'Programmable'
+			NoRemove InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{B39E12B5-DEB4-43a4-AF5B-1ED2537EE682}'
+		}
+	}
+}

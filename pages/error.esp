@@ -1,0 +1,13 @@
+<esp:errorinfo>
+<table cellpadding=4 cellspacing=4>
+	<tr>
+		<td>Error Code: {code}</td>
+	</tr>
+	<tr>
+		<td>Description: {description}</td>
+	</tr>
+	<tr>
+		<td>Source: {source}</td>
+	</tr>
+</table>
+</esp:errorinfo>

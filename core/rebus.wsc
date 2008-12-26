@@ -1,0 +1,217 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration
+   description="REBUS Core"
+   progid="REBUS.Core"
+   version="1"
+   classid="{66D1D00E-992B-460e-ACF8-E50A68C30157}"
+   remotable="true" />
+
+<public> 
+   <property name="defaultProjectPath"/>
+   <property name="projects"/>
+   <property name="config"/>
+
+   <method name="init" internalName="init"/>
+   <method name="saveConfig" internalName="saveConfig"/>
+   <method name="createProject" internalName="createProject">
+		<parameter name="codename"/>
+		<parameter name="path"/>
+		<parameter name="productname"/>
+		<parameter name="description"/>
+		<parameter name="stemplate"/>
+   </method>
+   <method name="removeProject" internalName="removeProject"/>
+   <method name="getPlugins" internalName="getPlugins"/>
+   <method name="getPlugin" internalName="getPlugin"/>
+   <method name="getPluginCount" internalName="getPluginCount"/>
+   <method name="getTemplates" internalName="getTemplates"/>
+   <method name="getTemplate" internalName="getTemplate"/>
+   <method name="getTemplateCount" internalName="getTemplateCount"/>
+   <method name="getProject" internalName="getProject"/>
+   <method name="getProjectCount" internalName="getProjectCount"/>
+</public>
+<script language="JScript">
+
+	<![CDATA[
+		// get rebus path
+		var shl = new ActiveXObject("WScript.Shell");
+		var rebus_root = shl.RegRead("HKLM\\Software\\PBDevEx\\REBUS\\MainFolder");
+
+		var config_path = rebus_root + '/config';
+		var config_xml_path = config_path + '/config.xml';
+
+		// read configuration file
+		config = new ActiveXObject("Microsoft.XMLDOM");
+			
+		config.async = false;
+		config.load(config_xml_path);
+
+		// initialize the object
+		function init()
+		{
+			// setup some defaults
+			defaultProjectPath = "";
+		
+			// enumerates projects
+			projects = new Array();
+
+			prjs = config.selectNodes("/rebus/project");
+			for(i = 0; i < prjs.length; i++)
+			{
+				prj_xml = prjs.item(i);
+				
+				// create project object
+				prj = new ActiveXObject("REBUS.Project");
+				prj.corepath = rebus_root + "/core";
+				
+				prj.init( prj_xml.selectSingleNode("codename").text, 
+					prj_xml.selectSingleNode("path").text );
+					
+				projects.push( prj );
+			}
+		}
+		
+		// saves the server configuration file
+		function saveConfig()
+		{
+			config.save(config_xml_path);
+		}
+		
+		// create new project
+		function createProject(codename, path, productname, description, stemplate)
+		{
+			// codename is unique
+			x_dup = config.selectNodes("/rebus/project[codename/.='"+ codename +"']");
+			if(x_dup.length > 0) throw new Error(1, "The project with the codename '"+ codename + "' already exists");
+
+			x_name = config.createElement("codename"); 
+			x_name.text = codename;
+			x_path = config.createElement("path");
+			x_path.text = path;
+
+			x_prj = config.createElement("project");
+			x_prj.appendChild(x_name);
+			x_prj.appendChild(x_path);
+			
+			config.documentElement.appendChild(x_prj);
+
+			// make file structure of the project
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+
+			if(!fso.FolderExists(path)) fso.CreateFolder(path);
+			if(!fso.FolderExists(path + "\\bin")) fso.CreateFolder(path + "\\bin");
+			if(!fso.FolderExists(path + "\\sources")) fso.CreateFolder(path + "\\sources");
+			
+			// make the project configuration file 
+			// using default template
+			var prj_config = new ActiveXObject("Microsoft.XMLDOM");
+			prj_config.async = false;
+			if(stemplate == '') stemplate = "default.xml";
+			prj_config.load(rebus_root + "/templates/" + stemplate);
+
+            prj_config.selectSingleNode("/project/version").text = "1.0.0";
+            prj_config.selectSingleNode("/project/productname").text = productname;
+            prj_config.selectSingleNode("/project/description").text = description;
+			
+			prj_config.save(path + "\\config.xml");
+			config.save(config_xml_path);
+
+			// store new project in the projects collection
+			prj = new ActiveXObject("REBUS.Project");
+			prj.corepath = rebus_root + "/core";
+			prj.init( codename, path );
+
+			return projects.push( prj ) - 1;
+		}
+
+		// remove the project from configuration
+		function removeProject(codename)
+		{
+			x_prj = config.selectSingleNode("/rebus/project[codename/.='"+ codename +"']");
+			config.documentElement.removeChild(x_prj);
+			config.save(config_xml_path);
+			
+			init();
+		}
+
+		// retrieve current plugins list
+		function getPlugins()		
+		{
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+			folder = fso.GetFolder(rebus_root + "//plugins");
+
+			var plugin_xml = new ActiveXObject("Microsoft.XMLDOM");
+			plugin_xml.async = false;
+
+			plugins = new Array();
+			files = new Enumerator(folder.Files);
+			
+			for(; !files.atEnd(); files.moveNext()) 
+			{
+				txt = fso.OpenTextFile(files.item().Path);
+
+				regexp = new RegExp("progid=\"(.+)\"", "ig");
+				var arr = regexp.exec(txt.ReadAll());
+						
+				plugins.push( RegExp.$1 );
+			}
+			return plugins;
+		}
+
+		// retrieve project templates list
+		function getTemplates()		
+		{
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+			folder = fso.GetFolder(rebus_root + "//templates");
+
+			var template_xml = new ActiveXObject("Microsoft.XMLDOM");
+			template_xml.async = false;
+
+			templates = new Array();
+			files = new Enumerator(folder.Files);
+			
+			for(; !files.atEnd(); files.moveNext()) 
+			{
+				templates.push( files.item().Name );
+			}
+			return templates;
+		}
+		
+		function getProject( index )
+		{
+			return projects[index];
+		}
+
+		function getProjectCount()
+		{
+			return projects.length;
+		}
+
+		function getTemplate( index )
+		{
+			templates = getTemplates();
+			return templates[index];
+		}
+
+		function getTemplateCount()
+		{
+			templates = getTemplates();
+			return templates.length;
+		}
+
+		function getPlugin( index )
+		{
+			plugins = getPlugins();
+			return plugins[index];
+		}
+
+		function getPluginCount()
+		{
+			plugins = getPlugins();
+			return plugins.length;
+		}
+	]]>
+
+</script>
+</component>

@@ -1,0 +1,52 @@
+// rebusscc.idl : IDL source for rebusscc.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (rebusscc.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(4014EB55-4A22-425F-86F7-163FE6FCA755),
+		dual,
+		helpstring("ISourceCodeControl Interface"),
+		pointer_default(unique)
+	]
+	interface ISourceCodeControl : IDispatch
+	{
+		[id(1), helpstring("method getVendors")] HRESULT getVendors([out, retval] BSTR *szVendorList);
+		[id(2), helpstring("method connect")] HRESULT connect([in] BSTR szVendor, [in] BSTR szUser, [in] BSTR szPassword);
+		[id(3), helpstring("method getFiles")] HRESULT getFiles([in] BSTR szProject, [in] BSTR szLocal, [in] BSTR szMask);
+	};
+
+[
+	uuid(A12BE2EB-7530-40D3-B137-9990D3184900),
+	version(1.0),
+	helpstring("rebusscc 1.0 Type Library")
+]
+library REBUSSCCLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(167E69E4-B507-4351-BD3B-F8CE542064C8),
+		helpstring("_ISourceCodeControlEvents Interface")
+	]
+	dispinterface _ISourceCodeControlEvents
+	{
+		properties:
+		methods:
+	};
+
+	[
+		uuid(EAFDAA93-9A65-4267-B8FE-C31A061B3CCB),
+		helpstring("SourceCodeControl Class")
+	]
+	coclass SourceCodeControl
+	{
+		[default] interface ISourceCodeControl;
+		[default, source] dispinterface _ISourceCodeControlEvents;
+	};
+};

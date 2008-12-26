@@ -1,0 +1,59 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Layout on FileServer"
+   progid="REBUS.LayoutFileServer"
+   version="1"
+   classid="{14F0E65A-39AA-4546-A478-928E2E2B0703}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[ 
+
+		function getParmsDef()
+		{
+			return '<parms><LayoutFolder></LayoutFolder></parms>';
+		}
+
+		function run()
+		{
+			// get source project path
+			var sourcepath = project.path;
+
+			// get project version
+			var version = project.config.selectSingleNode("/project/version").text;
+
+			// get destination path
+			var destpath = parms.get("LayoutFolder") + "\\" + version;
+
+			project.logger.write("> layout the project...");
+
+			try {
+				// copy project
+				var fso = new ActiveXObject("Scripting.FileSystemObject")
+				
+				if(!fso.FolderExists(destpath)) {
+					fso.CreateFolder(destpath);
+				}
+			
+				fso.CopyFolder( sourcepath, destpath, true );
+
+				project.logger.write("> layout has completed: " + destpath);
+			}
+			catch( e )
+			{
+				project.logger.write("> layout to the folder '"+ destpath +"' has failed: " + e.description );
+			}
+		}
+		
+	]]>
+
+</script>
+</component>

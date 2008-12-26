@@ -1,0 +1,316 @@
+<html>
+<style>
+td {padding-top:12pt;font-family:times;font-size:12pt;text-align:justify;}
+pre {font-size:10pt;}
+.section {font-size:16pt;font-weight:bold;font-family:arial;}
+.subsection {font-size:12pt;font-weight:bold;font-family:arial;}
+</style>
+<body>
+
+<table width=95%>
+<tr><td style="padding-top:0pt;">
+<table width=100% cellpadding=0 cellspacing=0>
+<tr>
+<td class=subsection style="padding-top:0pt;">
+REBUS Users's Guide
+</td>
+<td width=100 style="padding-top:0pt;text-align:right">
+v2.2
+</td>
+</tr>
+</table>
+<hr>
+</td></tr>
+
+<tr><td style="padding-top:0pt;">
+This document is intended for REBUS users. It covers the REBUS architecture, describes its main
+components and user interface. The document also describes REBUS standard plug-ins, its purpose and its parameters definition.
+</td></tr>
+<tr><td>
+For details see sections below:
+</td></tr>
+
+
+<tr><td style="padding-top:10pt;">
+<table cellpadding=4>
+<tr><td style="padding-top:0pt;"><a href="#100">Architecture</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#200">Installation</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#300">User Interface (REBUS Pages)</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#400">REBUS Plug-ins</a></td></tr>
+</table>
+</td></tr>
+
+<tr><td class=section>
+<a name="100">Architecture
+</td></tr>
+<tr><td>
+The REBUS is the web application that allows you to configure and compile projects developed on the PowerBuilder platform on the dedicated server remotely using usual web browser. The REBUS architecturally consists of REBUS Service and REBUS Plug-ins. 
+</td></tr>
+<tr><td>
+The REBUS Service is a NT-service that realizes simple web server that allows you to configure and compile your projects remotely using web browser and scheduler that allows you to realize the continuous integration approach. Scheduler automates the release compilation by a given schedule, for example, at night.
+</td></tr>
+<tr><td>
+REBUS Plug-ins are extensions of release building business process. They automate project libraries management, compilation, backup making and so on. Plug-in is a scriptable component which is very simple to program and to bring into accordance to your needs.
+</td></tr>
+<tr><td>
+All parameters are stored in the configuration files. There are two different kinds of configuration files both in XML format. The first one is the server configuration file which contains server settings and projects codename to projects path mapping. The second one is a project configuration file which is created automatically for each project and contains project’s attributes and parameters settings for project’s plug-ins.
+</td></tr>
+<tr><td>
+All files of the project (libraries, resources, etc.) must be located on the server file system in the folder called project folder. Thus, before project creation you need to create empty project folder. The path to that folder is called project path. Source and binary files will be placed by REBUS in subfolders of the project folder. All paths you assign to the plug-ins parameters must be relative paths, i.e. relative to the project path, for example, if project path is “c:\project”, then relative path “bin” is an equivalence to physical path “c:\project\bin”.
+</td></tr>
+
+<tr><td class=section>
+<a name="200">Installation
+</td></tr>
+<tr><td>
+To install the REBUS you need to run the installation file on the server. It unpacks and registers all needed files, installs and runs a REBUS service. After the installation you can compile your projects.
+</td></tr>
+<tr><td>
+Open a web browser, follow the link like this http://&lt;server name>:9000 (it depends on network name of your server and a port number you can change at <a href="#19">Server Settings</a> page). 
+First of all you need to setup server configuration at <a href="#19">Server Settings</a> page. 
+Then you can proceed to projects configuration.
+Create a new project using a template, configure it according to your project needs and run compilation.
+</td></tr>
+<tr><td>
+Please note, that PowerBuilder (or its runtime) is needed to be installed on the server, because REBUS uses PBORCA library to compile projects.
+</td></tr>
+<tr><td class=section>
+<a name="300">REBUS Pages
+</td></tr>
+<tr><td style="padding-top:10pt;">
+<table cellpadding=4>
+<tr><td style="padding-top:0pt;"><a href="#11">Main</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#13">Project Configuration</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#15">Build State</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#17">Schedled Tasks</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#19">Server Settings</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#21">Registration</a></td></tr>
+</table>
+</td></tr>
+<tr><td>
+</td></tr>
+<tr><td class=subsection>
+<a name="11">Main
+</td></tr>
+<tr><td>
+On this page the list of compiled projects and all available projects are displayed.
+In the list of compiled projects a link to Build State page is displayed, so you can pass on to Build State page of a particular project. Also you can stop the compilation of a particular project immediately with use of Stop link.
+</td></tr>
+<tr><td>
+In the list of all projects you can configure particular project (using <a href="#13">Configure</a> link), remove a project (using Remove link) and run project compilation (using Build link).
+</td></tr>
+<tr><td>
+To create a new project you need to click a “Create new project” link, fill the form with the product codename, product name, and its description, select a particular project template and click the “Create” button. After the project creation you will fall into the <a href="#13">Project Configuration</a> page. The project template is a predefined project configuration (see REBUS Developer’s Guide for details).
+</td></tr>
+
+<tr><td class=subsection>
+<a name="13">Project Configuration
+</td></tr>
+<tr><td>
+On this page you can tune the business process of the project compilation. You can append and remove plug-ins, reorder it and assign it parameters. Also you can change the name of the product and its description.
+</td></tr>
+<tr><td>
+To change project attributes fill particular fields, for example, product name or its description, and save a project configuration.
+</td></tr>
+<tr><td>
+To change plug-ins parameters fill particular fields in the plug-in box and save a project configuration. You can reorder plug-ins in the list of project’s plug-ins using “Move Up” and “Move Down” links. Also you can remove a plug-in from the list using “Remove” link. Plug-ins parameters are described in the <a href="#400">REBUS Plug-ins</a> section.
+</td></tr>
+<tr><td>
+There are two ways to save a project configuration: “Save & Build” button and “Save” button. The first button saves a project configuration and runs a project build. The second button saves a project configuration only.
+</td></tr>
+<tr><td>
+To append a plug-in you need to go at the bottom of page, to select particular plug-in and to click “Append” button. After that you need to assign correct values to plug-in parameters, if any.
+</td></tr>
+
+<tr><td class=subsection>
+<a name="15">Build State
+</td></tr>
+<tr><td>
+On this page the log of a project compilation is presented. The log is filled with the contents of a build.log file that places in the project folder. The log is useful to obtain the current project compilation stage and errors description.
+</td></tr>
+<tr><td>
+If an error was occurred during project compilation as a result of incorrect project configuration settings you can change the project configuration (using <a href="#13">Configure</a> link) and then restart the compilation process (using Restart link).
+</td></tr>
+<tr><td>
+If you need to stop the compilation process immediately you can press Stop link.
+</td></tr>
+<tr><td class=subsection>
+<a name="17">Scheduled Tasks
+</td></tr>
+<tr><td>
+On this page you can configure the schedule of automatic compilation of your projects. To add a new scheduled task you need to select a particular project and to define its schedule.
+</td></tr>
+<tr><td>
+The schedule of a task is defined in the crontab manner, so you can define a minute, an hour, a day, a day of week and a month using the following rules:
+</td></tr>
+<tr><td>
+<i>&lt;Number></i> - the exact unit of time.
+</td></tr>
+<tr><td>
+<i>*</i> - each unit of time.
+</td></tr>
+<tr><td>
+<i>&lt;Nmber>-&lt;Number></i> - a range of time units. During the range the task will be executed on each unit of time.
+</td></tr>
+<tr><td>
+Here is an example of a task schedule:
+</td></tr>
+<tr><td>
+Minute: 0, Hour: 1, Day: *, DayOfWeek: 1-5, Month: * - the task will be executed at 1am each day, except sunday and saturday.
+</td></tr>
+<tr><td class=subsection>
+<a name="19">Server Settings
+</td></tr>
+<tr><td>
+On this page you can define some global parameters:
+</td></tr>
+<tr><td>
+<i>Web server port</i> – is the HTTP-port number on which the REBUS service will be accessible for users, for example, if you setup port number equal to 9000, then users can access the service by this url: http://&lt;machine name>:9000
+</td></tr>
+<tr><td>
+<i>Company name</i> – this is the name of a company whose name will be placed in the version info of project’s executable file.
+</td></tr>
+<tr><td>
+<i>Copyright</i> – this is the copyright info that will be placed in the version info of project’s executable file.
+</td></tr>
+<tr><td>
+To save changes click on the “Save” button.
+</td></tr>
+<tr><td class=subsection>
+<a name="21">Registration
+</td></tr>
+<tr><td>
+On this page you can register the product to continue to use it functionality. This page is available by the link "REGISTER" located in the evaluation message (at the bottom of each page). Evaluation message is displayed until you register the product.
+</td></tr>
+<tr><td>
+You need to enter your company name, order number and product key, that you will recieve after the product payment. Please note, that order number is the number of order you received while downloading the product. After you fill the form you have to press "Register" button and then to restart REBUS service.
+</td></tr>
+
+<tr><td class=section>
+<a name="400">REBUS Plug-ins
+</td></tr>
+<tr><td style="padding-top:10pt;">
+<table cellpadding=4>
+<tr><td style="padding-top:0pt;"><a href="#90">REBUS.ProjectFileSystem</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#92">REBUS.ProjectSCC</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#95">REBUS.Compiler</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#100">REBUS.BackupFileServer</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#101">REBUS.LayoutFileServer</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#110">REBUS.IncreaseBuildNumber</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#120">REBUS.Version</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#130">REBUS.SourceCodeControl</a></td></tr>
+<tr><td style="padding-top:0pt;"><a href="#130">REBUS.SCCGetFiles</a></td></tr>
+</table>
+</td></tr>
+<tr><td class=subsection>
+<a name="90">REBUS.ProjectFileSystem
+</td></tr>
+<tr><td>
+The plug-in prepares libraries list of a project in the case when libraries are located on the file system of the release builder server. Libraries list is a list of libraries of which contains a project. These libraries will be regenerated and compiled in the binary form with help of  REBUS.Compiler plug-in. You need to assign the project relative path where project’s libraries are placed (SourceSubFolder parameter).
+</td></tr>
+<tr><td>
+Libraries list also contains information about resource files. You need to assign the project relative path where resource files are placed (ResourceSubFolder parameter). The plug-in binds the library and it’s resource file by their file names compliance, for example, if the library names “framework.pbl”, then the plug-in will be looking for “framework.pbr” resource file and will binds them on success.
+</td></tr>
+<tr><td>
+You need to include the plug-in in the project configuration before REBUS.Compiler plug-in.
+</td></tr>
+<tr><td class=subsection>
+<a name="92">REBUS.ProjectSCC
+</td></tr>
+<tr><td>
+The plug-in prepares libraries list of a project in the case when libraries and resources are located in the repository of a Source Code Control System. The plug-in's behaviour is similar to REBUS.ProjectFileSystem plug-in, except it gets libraries and resource files from SCC repository. You need to assign the repository path where libraries are stored to the SCCFolder parameter. You need to assign repository path where resource files are located to the SCCResourceFolder parameter.
+</td></tr>
+<tr><td>
+You need to include the plug-in in the project configuration before REBUS.Compiler plug-in.
+</td></tr>
+<tr><td class=subsection>
+<a name="95">REBUS.Compiler
+</td></tr>
+<tr><td>
+The plug-in compiles a project developed on the PowerBuilder platform. Compilation process consists of two stages: regeneration and linking. During regeneration objects links are established in project libraries. During linking compiler generates binary files: .pbd (or .dll) and .exe. Before the compilation you need to assign several plug-in parameters:
+</td></tr>
+<tr><td>
+<i>RegenerationMode</i> – is a kind of libraries regeneration. You can choose one of these values: None – regeneration stage will be skipped (it is useful sometime, because regeneration takes a lot of time), SequentialNonStop – sequential regeneration of each library without stop on regeneration failure; FullRebuild – usual full rebuild how it PowerBuilder does.
+</td></tr>
+<tr><td>
+<i>BinSubFolder</i> – is a project relative path where the binaries will be placed after compilation.
+</td></tr>
+<tr><td>
+<i>LinkedLibraries</i> – is a semicolon-separated list of libraries which you want to link in the executable file. Other libraries will be linked into the .pbd or .dll files.
+</td></tr>
+<tr><td>
+<i>ExeName</i> – the name of an executable file that will be created after compilation, for example, myproject.exe.
+</td></tr>
+<tr><td>
+<i>IconFileName</i> – is a project relative path to the icon file that will be included in the executable as application icon.
+</td></tr>
+<tr><td>
+<i>AppLibrary</i> – is a name of a library where the application object is placed.
+</td></tr>
+<tr><td>
+<i>AppObject</i> – is a name of an application object.
+</td></tr>
+<tr><td>
+<i>PowerBuilder</i> – is a version of the PowerBuilder with use of which your application is developed.
+</td></tr>
+<tr><td>
+<i>ProjectPlugin</i> – is a plug-in name that prepares libraries list, for example, REBUS.ProjectFileSystem.
+</td></tr>
+<tr><td>
+You need to include the plug-in after a plug-in which prepares libraries list.
+</td></tr>
+<tr><td class=subsection>
+<a name="100">REBUS.BackupFileServer
+</td></tr>
+<tr><td>
+The plug-in automates making of project backup on a file server. You need to assign the backup path (BackupFolder parameter) on which source and binary files of a project will be copied. The plug-in creates a subfolder named as a current version number of project and copies to it source and binary files of a project. Thus you get a backup of all releases of your project on a file server. 
+</td></tr>
+<tr><td class=subsection>
+<a name="101">REBUS.LayoutFileServer
+</td></tr>
+<tr><td>
+If you use to storing project’s source code and binaries on the dedicated file server approach, then this plug-in will be helpful for you. It copies project’s source code, configuration and binaries to the given folder (LyaoutFolder parameter). So when project compilation will be finished source code and binaries will be copied from the release builder server to the dedicated file server where project files is in the common access.
+</td></tr>
+<tr><td class=subsection>
+<a name="110">REBUS.IncreaseBuildNumber
+</td></tr>
+<tr><td>
+The plug-in increases the build number of a release of your project by one. Usually a build number is the last number in the point-separated version number, for example, if the version number is a 1.0.5, then a build number is a 5. Changed version info is stored in the project configuration file. You should insert the plug-in before version info setting into executable file, project backup or layout.
+</td></tr>
+<tr><td class=subsection>
+<a name="120">REBUS.Version
+</td></tr>
+<tr><td>
+The plug-in stores version information in the executable file of your project. Microsoft Windows gives a standard way to provide version information about an executable (look at the Version tab of executable properties). Version information contains the product version number, product description, company name and copyrights. These data are taken from a project configuration file and the server configuration file, so they are adjustable (see the <a href="#19">Server Settings</a> page and <a href="#13">Project Configuration</a> page description).
+</td></tr>
+<tr><td class=subsection>
+<a name="130">REBUS.SourceCodeControl
+</td></tr>
+<tr><td>
+This plug-in is doing nothing except of connecting to a Source Code Control System (or Source Code Management System) using given provider name (Vendor parameter), user name and his password (UserName and UserPassword parameters). Values of the Vendor combobox are taken from the server's registry, so if the SCC system is installed on the server, then it will appear in the combobox automatically. Created connection is used in other plug-ins, such as REBUS.SCCGetFiles. If you want to take last versions of your project libraries during project compilation you must include this plug-in in the project configuration.
+</td></tr>
+<tr><td class=subsection>
+<a name="140">REBUS.SCCGetFiles
+</td></tr>
+<tr><td>
+The plug-in gets latest versions (makes local copies on a server) of project libraries or another files from your Source Code Control system. You need to assign a path of the particular SCC repository (SCCFolder parameter) where files are located and to assign a project relative path on a server file system where you want local copies are placed (LocalSubFolder parameter). For example, if you use Microsoft Visual SourceSafe you need to assign “$/AllProjects/MyProject” value to the SCCFolder parameter and “Sources” value to the LocalSubFolder parameter. In this case all files from “MyProject” repository will be copied to the “c:\MyProject\Sources” folder, where “c:\MyProject” is the project folder.
+</td></tr>
+<tr><td>
+You can filter files copied from the source code repository using the FileMask parameter. It contains usual DOS masks delimited by semicolon.
+</td></tr>
+<tr><td>
+You need to include REBUS.SourceCodeControl plug-in in the project configuration before this one (see <a href="#130">REBUS.SourceCodeControl</a> description for more details).
+</td></tr>
+<tr><td>
+Any questions? E-mail us: <a href="mailto:support@pbdevex.com">support@pbdevex.com</a>
+</td></tr>
+
+
+<tr><td>
+<hr>
+Copyright (c) 2005, <a href="http://www.pbdevex.com">PBDevEx Software</a>
+</td></tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rebus>
+	<settings>
+		<path></path>
+		<port>9000</port>
+		<copyright>Copyright (c)</copyright>
+		<company></company>
+		<email></email>
+	</settings>
+	<taskinfo></taskinfo>
+</rebus>

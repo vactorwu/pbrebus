@@ -1,0 +1,47 @@
+<esp:registration>
+<script language="JScript">
+		function show_purchase()
+		{
+			var left = window.screenLeft + 15;
+			var top = window.screenTop + 15;
+			window.open( 'http://www.pbdevex.com/purchase.php?product=2', '_blank', 'width=770,height=500,left='+left+',top='+top+',scrollbars=yes,toolbar=no,menubar=no,location=no,status=no,resizable=no' );
+		}
+</script>
+<table cellpadding=6>
+	<tr>
+		<td>
+			In order to continue to use the REBUS after evaluation period you need
+			to <a href="javascript: show_purchase();">purchase</a> the full license.
+		</td>
+	</tr>
+	<tr>
+		<td>
+			After the payment you will recieve a product key by e-mail. Fill the fields below and press "Register" button. Please note, order number is the number of your order that you recieved when was downloading a product.
+		</td>
+	</tr>
+	<tr>
+		<esp:complete>
+			<td style="color:{color};font-weight:bold;"> {info}	</td>
+		</esp:complete>
+	</tr>
+</table>
+
+	
+<form action="register" method="post">
+<table cellpadding=4 width=80%%>
+	<tr>
+		<td class=parmname width=120>Company Name:</td><td><input name="company" value="{company}"></td>
+	</tr>
+	<tr>
+		<td class=parmname>Order No.:</td><td><input name="order" value="{order}"></td>
+	</tr>
+	<tr>
+		<td class=parmname>Product Key:</td><td><input name="key" value="{key}"></td>
+	</tr>
+ 
+	<tr>
+		<td></td><td align=left><input class=button type="submit" value="Register"></td>
+	</tr>
+</table>
+</form>
+</esp:registration>

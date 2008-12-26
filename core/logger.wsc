@@ -1,0 +1,80 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration
+   description="REBUS Logger"
+   progid="REBUS.logger"
+   version="1"
+   classid="{2BF60E67-376C-4255-B18B-6BDDF49E31F8}"
+   remotable="true" />
+
+<public>
+   <property name="path"/>
+
+   <method name="write" internalName="write_line"/>
+   <method name="append" internalName="append_line"/>
+   <method name="read" internalName="read"/>
+   <method name="getFileDate" internalName="getFileDate"/>
+</public>
+<script language="JScript">
+
+	<![CDATA[
+
+		var fso = new ActiveXObject("Scripting.FileSystemObject");
+	 
+		// writes to the log
+		function write_line( what )
+		{
+			if(path == '') throw new Error(1, "You should setup the log path");
+
+			if(this.stream == null) {
+				this.stream = fso.CreateTextFile(path + "\\build.log");
+			}
+			
+			dt = new Date();
+			this.stream.WriteLine(dt.toLocaleTimeString() + " - " + what);
+		}
+
+		// appends to the log
+		function append_line( what )
+		{
+			if(path == '') throw new Error(1, "You should setup the log path");
+			
+			if(!fso.FileExists(path + "\\build.log")) {
+				strm = fso.CreateTextFile(path + "\\build.log");
+			} else {
+				strm = fso.OpenTextFile(path + "\\build.log", 8, false);
+			}
+			
+			dt = new Date();
+			strm.WriteLine(dt.toLocaleTimeString() + " - " + what);
+			strm.Close();
+		}
+		
+		// reads all text from the log
+		function read()
+		{
+			if(path == '') throw new Error(1, "You should setup the log path");
+			
+			if(!fso.FileExists(path + "\\build.log")) {
+				throw new Error(1, "Can't found the log file on the path: "+ path + "\\build.log");
+			}
+			
+			out_stream = fso.OpenTextFile(path + "\\build.log");
+			return out_stream.ReadAll();
+		}
+		
+		// returs the date of a build log file
+		function getFileDate()
+		{
+			try {
+				file = fso.GetFile(path + "\\build.log");
+				return file.DateLastModified;
+			}
+			catch(e) {
+				return '';
+			}
+		}
+	]]>
+
+</script>
+</component>

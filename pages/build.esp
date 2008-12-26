@@ -1,0 +1,30 @@
+<esp:refresh>
+	<script language="JScript">
+		setTimeout("document.location.reload(true)",5*1000,"JavaScript");
+	</script>	
+</esp:refresh>
+
+<table cellpadding=0 cellspacing=0 width=100%% style="table-layout:fixed;">
+	<tr>
+		<td>
+			<table cellpadding=0 cellspacing=0>
+				<tr>
+					<esp:stop>
+						<td style="padding-right:10pt;"><a href="stop?project_id={project_id}">Stop</a></td>
+					</esp:stop>
+					
+					<esp:actions>
+						<td style="padding-right:10pt;"><a href="project?project_id={project_id}">Configure...</a></td>
+						<td style="padding-right:10pt;"><a href="prepeare?project_id={project_id}">Restart</a></td>
+					</esp:actions>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top:10pt;">
+			<pre style="font-size:8pt;font-family:verdana;width:100%%;word-wrap:break-word;"><esp:output>{log}</esp:output></pre>
+		</td>
+	</tr>
+</table>
+

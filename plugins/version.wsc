@@ -1,0 +1,90 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Version"
+   progid="REBUS.Version"
+   version="1"
+   classid="{8B2F1875-EFC3-4e20-9EE1-DA8AAA54DF7F}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[
+
+		function getParmsDef()
+		{
+			return "";
+		}
+
+		function run()
+		{
+			var viexe = new ActiveXObject("IPM.VersionInfo");
+			viexe.Mode = 1;
+
+			// it is needed to get copyright and company name info
+			var rebus = new ActiveXObject("REBUS.Core");
+
+			compiler_plugin = project.plugin("REBUS.Compiler");
+
+			// get the exe-file path
+			exepath = project.path + '\\' + compiler_plugin.parms.get("BinSubFolder") + '\\' +
+				compiler_plugin.parms.get("ExeName");
+
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+			
+			if(fso.FileExists(exepath))
+			{ 
+				// prepeare version info
+				version = project.config.selectSingleNode("/project/version").text;
+				info = version.split(".");
+				if(info.length < 3) {
+					info[2] = "0";
+				}
+				if(info.length < 4) {
+					info[3] = "0";
+				}
+				version = info.join(", ");
+
+				description = project.config.selectSingleNode("/project/description").text;
+				copyright = rebus.config.selectSingleNode("/rebus/settings/copyright").text;
+				companyname = rebus.config.selectSingleNode("/rebus/settings/company").text;
+				internalname = compiler_plugin.parms.get("ExeName");
+				productname = project.config.selectSingleNode("/project/productname").text;
+				
+				sum_length = version.length * 2 + description.length +
+					copyright.length + companyname.length + internalname.length +
+					productname.length;
+					
+				if(sum_length > 1032) {
+					throw new Error(1, "You need to decrease the description text size or the copyright text size " +
+						"on " + (sum_length - 1032) + " symbols");
+				}
+				
+				// setup version info into executable
+				viexe.load(exepath);
+
+				viexe.Copyright = copyright;
+				viexe.FileVersion = version;
+				viexe.ProductVersion = version;
+				viexe.Description = description;
+				viexe.CompanyName = companyname;
+				viexe.InternalName = internalname;
+				viexe.ProductName = productname;
+				
+				project.logger.write("> setup version info");
+			}
+			else
+			{
+				throw new Error(1, "can't find executable: " + exepath);
+			}
+		}
+		
+	]]>
+
+</script>
+</component>

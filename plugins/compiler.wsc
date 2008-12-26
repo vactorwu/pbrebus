@@ -1,0 +1,112 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS Compiler"
+   progid="REBUS.Compiler"
+   version="1"
+   classid="{45C70DFD-D571-49dc-8853-D5853BF524E3}"
+   remotable="true" />
+
+<object progid="REBUS.pbcompiler" id="comp" events="true"/>
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <method name="run" internalName="run"/>
+</public> 
+
+<script language="JScript">
+
+	<![CDATA[  
+
+		function getParmsDef()
+		{
+			return '<parms>'+
+				'<RegenerationMode>1:None;2:Sequential;3:SequentialNonStop;4:FullRebuild</RegenerationMode>' +
+				'<BinSubFolder></BinSubFolder>'+
+				'<LinkedLibraries></LinkedLibraries>'+
+				'<ExeName></ExeName>' + 
+				'<IconFileName></IconFileName>' +
+				'<AppLibrary></AppLibrary>' + 
+				'<AppObject></AppObject>' + 
+				'<PowerBuilder>PowerBuilder 6.5:PowerBuilder 6.5;PowerBuilder 8.0:PowerBuilder 8.0;PowerBuilder 9.0:PowerBuilder 9.0</PowerBuilder>' + 
+				'</parms>';
+		}
+
+		function comp::log( what )
+		{
+			project.logger.write( "> " + what );
+		}
+
+		function comp::fatalError( what )
+		{
+			//project.logger.write( "ERROR: " + what );
+			//throw new Error(1, what);
+		}
+
+		function run()
+		{
+			var bin_path = project.path + "\\" + parms.get("BinSubFolder");
+			
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+			if(!fso.FolderExists(bin_path)) throw new Error(1, "The directory doesn't exist: "+ bin_path);
+			
+			// initialize compiler
+			comp.Init( parms.get("PowerBuilder"), bin_path );
+
+			// set library list
+			if(!project.hasOwnProperty("libraries_plugin")) 
+				throw new Error(1, "Plug-in that prepares libraries list is needed, for example REBUS.ProjectFileSystem or REBUS.ProjectSCC");
+
+			comp.SetLibraryList( project.libraries_plugin.libraries );
+
+			// set application info
+			comp.SetApplicationLibrary( parms.get("AppLibrary") );			
+			comp.SetApplicationObject( parms.get("AppObject") );			
+
+			// set linker options
+			comp.SetExeName( parms.get("ExeName") ); 
+			comp.SetIconFile( project.path + "\\" + parms.get("IconFileName") );			
+
+			linklib = parms.get("LinkedLibraries").split(";");
+			for(i = 0; i < linklib.length; i++)
+			{
+				comp.SetLinkedLibrary( linklib[i] );
+			}
+
+			// get regeneration mode
+			switch(parms.get("RegenerationMode"))
+			{
+			case '1':
+				project.logger.write("> regenerating [skipped]...");
+				break;
+			case '2':
+				project.logger.write("> regenerating [sequential]...");
+				comp.Regenerate();
+				break;
+			case '3':
+				project.logger.write("> regenerating [sequential non stop]...");
+				break;
+			case '4':
+				project.logger.write("> regenerating [full rebuild]...");
+				comp.FullRebuild();
+				break;
+			};
+			
+			// remove old binary files
+			project.logger.write("> delete old binaries");
+			try {
+				fso.DeleteFile(bin_path + "\\*.pbd");
+				fso.DeleteFile(bin_path + "\\*.exe");
+			}
+			catch(e) {
+			}
+			
+			project.logger.write("> linking...");
+			comp.Build();
+		}
+	]]>
+
+</script>
+</component>

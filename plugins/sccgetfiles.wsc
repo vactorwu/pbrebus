@@ -1,0 +1,56 @@
+<?XML version="1.0" encoding="windows-1251"?>
+<component>
+<registration 
+   description="REBUS SCC Get Files"
+   progid="REBUS.SCCGetFiles"
+   version="1"
+   classid="{456B9A93-6A19-444a-9B68-385F2848C217}"
+   remotable="true" />
+
+<public> 
+   <method name="getParmsDef" internalName="getParmsDef"/>
+   <property name="project"/>
+   <property name="parms"/>
+   <method name="run" internalName="run"/>
+</public> 
+<script language="JScript">
+
+	<![CDATA[ 
+
+		function getParmsDef()
+		{
+			// get installed SCC products
+
+			return '<parms><SCCFolder></SCCFolder>' +
+				'<LocalSubFolder></LocalSubFolder>' + 
+				'<FileMask>*.*</FileMask>' +
+				'</parms>';
+		}
+
+		function run()
+		{
+			// get local folder path
+			local_folder = project.path + '\\' + parms.get("LocalSubFolder");
+
+			if(local_folder == "" || parms.get("SCCFolder") == "") 
+				throw new Error(1, "You need to give LocalSubFolder and SCCFolder values");
+
+			file_mask = parms.get("FileMask") == "" ? "*.*" : parms.get("FileMask");
+
+			// get the scc object
+			scc = project.plugin("REBUS.SourceCodeControl").scc;
+
+			if(scc == null) throw new Error(1, "Can't get SCC object from REBUS.SourceCodeControl");
+			
+			project.logger.write("> get files by mask: "+ file_mask );
+			project.logger.write("> from scc folder: " + parms.get("SCCFolder"));
+			project.logger.write("> to local folder: " + local_folder);
+
+			// make files local
+			scc.getFiles( parms.get("SCCFolder"), local_folder, file_mask );
+		}
+		
+	]]>
+
+</script>
+</component>

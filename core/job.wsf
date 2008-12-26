@@ -1,0 +1,175 @@
+<job>
+    <runtime>
+        <description>This is the project instance</description>
+        <named
+            name="path"
+            helpstring= "path where the project locates"
+            type = "string"
+            required="true"
+        />
+    </runtime>
+    
+    <script language="JScript">
+
+		try 
+		{
+			tm_begin = new Date();
+			
+			// parse command line arguments
+			path = WScript.Arguments.Named("path");
+
+			// create the logger object
+			logger = new ActiveXObject("REBUS.Logger");
+			logger.path = path;
+    
+			// read the project configuration
+			var config = new ActiveXObject("Microsoft.XMLDOM");
+				
+			config.async = false;
+			config.load(path + '\\config.xml');
+		
+			if(config.xml == '') {
+				throw new Error(1, "Can't find the project configuration file: "+ path + "\\config.xml");
+			}
+    
+			logger.write( "Build Date: " + (new Date()).toDateString() );
+			logger.write( "Project: " + config.selectSingleNode("/project/productname").text );
+			logger.write( "Version: " + config.selectSingleNode("/project/version").text );
+
+			// create project object, that would be storing project properties
+			project = new project_object();
+			project.logger = logger;
+			project.config = config;
+			project.path = path;
+			
+			// prepeare email body to notify on compilation success
+			project.email_body = "The release has been built successfully!\r\n\r\n";
+			project.email_body += "Project: " + config.selectSingleNode("/project/productname").text;
+			project.email_body += "\r\n";
+			project.email_body += "Version: " + config.selectSingleNode("/project/version").text;
+			project.email_body += "\r\n\r\n";
+
+			// run plugins
+			plugins = config.selectNodes("/project/plugin");
+			for( i = 0; i < plugins.length; i++)
+			{
+				if(plugins.item(i).getAttribute("active") == "no") continue;
+			
+				// get the plugin class
+				plugin_class = plugins.item(i).selectSingleNode("class").text;
+				
+				logger.write(">");
+				logger.write("> plugin: " + plugin_class);
+
+				// create plugin object				
+				var plugin = new ActiveXObject(plugin_class);
+
+				// set project property
+				plugin.project = project;				
+
+				// set parameters
+				plugin.parms = new plugin_parms(plugin_class);
+
+				// run the plugin
+				plugin.run(); 
+				
+				// found a plug-in that exposes the libraries property
+				try {
+					if(typeof(plugin.libraries) == "string")
+						project.libraries_plugin = plugin;
+				}
+				catch(e) {
+				}
+
+				// store plugin in the plugin collection in the project object
+				project.appendplugin( plugin_class, plugin );
+			}
+			logger.write(">");
+    
+			// save the configuration file
+			config.save(path + '\\config.xml');
+		
+			logger.write("Release has been built successfully!");
+			execution_time = Math.round((new Date() - tm_begin) / (1000 * 60)) + " min";
+			logger.write("Total execution time: " + execution_time);
+			
+			// report on compilation success
+			email_to = config.selectSingleNode("/project/email").text;
+			
+			var rebus = new ActiveXObject("REBUS.Core");
+			email_from = rebus.config.selectSingleNode("/rebus/settings/email").text;
+			
+			if(email_to != "" && email_from != "") 
+			{
+				email_subject = "REBUS: Report on compilation success";
+		
+				project.email_body += "\r\n";
+				project.email_body += "Total compilation time: " + execution_time;
+				
+				try {
+					var emailer = new ActiveXObject("REBUS.EMailer");
+					emailer.SetFrom(email_from);
+					emailer.SetTo(email_to);
+					emailer.SetSubject(email_subject);
+					emailer.SetBody(project.email_body);
+					emailer.Send();
+				}
+				catch( e )
+				{
+					project.logger.write("ERROR: " + e.description); 
+				}
+			}
+		}
+		catch( e )
+		{
+			//project.logger.write("ERROR: " + e.description); 
+			throw e;
+			WScript.Quit(-1);
+		}		
+
+		// project object constructor
+		function project_object()
+		{
+			this.plugins = new Array();
+			this.plugin_names = new Array();
+	
+			this.appendplugin = project_appendplugin;
+			this.plugin = project_getplugin;
+		}
+
+		// append plugin object to the project object
+		function project_appendplugin( classname, plugin_obj )
+		{
+			this.plugin_names.push( classname );
+			this.plugins.push( plugin_obj );
+		}
+
+		// retrieve plugin object from the project object
+		function project_getplugin( classname )
+		{
+			for(jj in this.plugin_names) {
+				if(this.plugin_names[jj] == classname)
+					return this.plugins[jj];
+			}
+			return null;
+		}
+
+		// plugin parameters object
+		function plugin_parms( class_name )
+		{
+			this.parms = config.selectSingleNode("/project/plugin[class/.='"+ class_name +"']/parms");
+			this.get = plugin_get;
+		}
+
+		function plugin_get( parm )
+		{
+			try {
+				return this.parms.selectSingleNode(parm).text;
+			}
+			catch(e) {
+				return "";
+			}
+		}
+		
+    </script>
+</job>

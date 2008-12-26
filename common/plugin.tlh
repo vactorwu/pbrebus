@@ -1,0 +1,79 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8447.0 (49564068).
+//
+// plugin.tlh
+//
+// C++ source equivalent of Win32 type library ../core/plugin.tlb
+// compiler-generated file created 11/22/05 at 09:22:56 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace PluginTypeLib {
+
+//
+// Forward references and typedefs
+//
+
+struct /* coclass */ PluginCoClass;
+struct __declspec(uuid("f0a0c34d-69ee-4a8b-b6f8-af76508898c1"))
+/* dispinterface */ Plugin;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(Plugin, __uuidof(IDispatch));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("28941471-8cdb-4084-9e0f-b519efccf49b"))
+PluginCoClass;
+    // [ default ] dispinterface Plugin
+
+struct __declspec(uuid("f0a0c34d-69ee-4a8b-b6f8-af76508898c1"))
+Plugin : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=Getproject))
+    _variant_t project;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    // Methods:
+    _variant_t run (
+        const _variant_t & OptionalArgs );
+    _variant_t Getproject ( );
+    // Method 'Putproject' not emitted because of invalid return type: 
+    _variant_t getParmsDef (
+        const _variant_t & OptionalArgs );
+};
+
+//
+// Named GUID constants initializations
+//
+
+extern "C" const GUID __declspec(selectany) LIBID_PluginTypeLib =
+    {0xf84bc9b3,0x558a,0x4843,{0xbd,0xa1,0xa2,0x18,0x8b,0x4f,0xb0,0x75}};
+extern "C" const GUID __declspec(selectany) CLSID_PluginCoClass =
+    {0x28941471,0x8cdb,0x4084,{0x9e,0x0f,0xb5,0x19,0xef,0xcc,0xf4,0x9b}};
+extern "C" const GUID __declspec(selectany) DIID_Plugin =
+    {0xf0a0c34d,0x69ee,0x4a8b,{0xb6,0xf8,0xaf,0x76,0x50,0x88,0x98,0xc1}};
+
+//
+// Wrapper method implementations
+//
+
+#include "plugin.tli"
+
+} // namespace PluginTypeLib
+
+#pragma pack(pop)
